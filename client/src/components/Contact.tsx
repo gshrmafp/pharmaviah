@@ -1,7 +1,7 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { insertContactSchema, type InsertContact } from "@shared/schema";
-import { useContactForm } from "@/hooks/use-contact";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -13,10 +13,16 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Mail, MapPin, Phone } from "lucide-react";
-import { motion } from "framer-motion";
+import { Mail, MapPin, Phone, Send, CheckCircle2, MessageSquare } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { sendEmail, openWhatsApp } from "@/lib/emailService";
+import { useToast } from "@/hooks/use-toast";
 
 export function Contact() {
+  const [isSending, setIsSending] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const { toast } = useToast();
+
   const form = useForm<InsertContact>({
     resolver: zodResolver(insertContactSchema),
     defaultValues: {
@@ -27,12 +33,36 @@ export function Contact() {
     },
   });
 
-  const mutation = useContactForm();
+  const onSubmit = async (data: InsertContact) => {
+    // Honeypot check (assuming a field named 'subject' as honeypot if added, 
+    // but here we just follow the standard pattern)
+    setIsSending(true);
+    try {
+      await sendEmail(data);
+      setIsSuccess(true);
+      toast({
+        title: "Message Sent",
+        description: "We have received your request and will get back to you soon.",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again or use WhatsApp.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSending(false);
+    }
+  };
 
-  const onSubmit = (data: InsertContact) => {
-    mutation.mutate(data, {
-      onSuccess: () => form.reset()
-    });
+  const handleWhatsApp = () => {
+    const data = form.getValues();
+    openWhatsApp(data);
+  };
+
+  const resetForm = () => {
+    form.reset();
+    setIsSuccess(false);
   };
 
   return (
@@ -90,79 +120,147 @@ export function Contact() {
           </div>
 
           {/* Form Side */}
-          <div className="p-8 md:p-12">
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <FormField
-                  control={form.control}
-                  name="name"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-primary font-semibold">Full Name</FormLabel>
-                      <FormControl>
-                        <Input placeholder="John Doe" className="h-12 bg-slate-50 border-slate-200 focus:border-secondary focus:ring-secondary/10" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <div className="grid md:grid-cols-2 gap-6">
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-primary font-semibold">Email</FormLabel>
-                        <FormControl>
-                          <Input placeholder="john@company.com" className="h-12 bg-slate-50 border-slate-200 focus:border-secondary focus:ring-secondary/10" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="organization"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-primary font-semibold">Organization</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Company Name" className="h-12 bg-slate-50 border-slate-200 focus:border-secondary focus:ring-secondary/10" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-
-                <FormField
-                  control={form.control}
-                  name="message"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-primary font-semibold">Message</FormLabel>
-                      <FormControl>
-                        <Textarea 
-                          placeholder="How can we help you?" 
-                          className="min-h-[120px] bg-slate-50 border-slate-200 focus:border-secondary focus:ring-secondary/10 resize-none" 
-                          {...field} 
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <Button 
-                  type="submit" 
-                  disabled={mutation.isPending}
-                  className="w-full h-12 text-base font-semibold bg-secondary hover:bg-secondary/90 shadow-lg shadow-secondary/20 transition-all hover:scale-[1.01]"
+          <div className="p-8 md:p-12 min-h-[600px] flex flex-col justify-center">
+            <AnimatePresence mode="wait">
+              {isSuccess ? (
+                <motion.div 
+                  key="success"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  className="text-center space-y-6"
                 >
-                  {mutation.isPending ? "Sending..." : "Send Message"}
-                </Button>
-              </form>
-            </Form>
+                  <div className="flex justify-center">
+                    <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center">
+                      <CheckCircle2 className="w-10 h-10 text-green-600" />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="text-2xl font-bold text-primary">Thank You!</h4>
+                    <p className="text-slate-600">Your message has been sent successfully. We will contact you shortly.</p>
+                  </div>
+                  <div className="flex flex-col gap-3 pt-4">
+                    <Button 
+                      onClick={handleWhatsApp}
+                      className="w-full h-12 bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold flex gap-2"
+                    >
+                      <MessageSquare className="w-5 h-5" />
+                      Send Request on WhatsApp
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      onClick={resetForm}
+                      className="w-full h-12"
+                    >
+                      Send Another Message
+                    </Button>
+                  </div>
+                </motion.div>
+              ) : (
+                <motion.div 
+                  key="form"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                >
+                  <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                      {/* Honeypot field - hidden from users */}
+                      <div className="hidden">
+                        <input type="text" name="honeypot" tabIndex={-1} autoComplete="off" />
+                      </div>
+
+                      <FormField
+                        control={form.control}
+                        name="name"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-primary font-semibold">Full Name</FormLabel>
+                            <FormControl>
+                              <Input placeholder="John Doe" className="h-12 bg-slate-50 border-slate-200 focus:border-secondary focus:ring-secondary/10" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      
+                      <div className="grid md:grid-cols-2 gap-6">
+                        <FormField
+                          control={form.control}
+                          name="email"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-primary font-semibold">Email</FormLabel>
+                              <FormControl>
+                                <Input placeholder="john@company.com" className="h-12 bg-slate-50 border-slate-200 focus:border-secondary focus:ring-secondary/10" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="organization"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="text-primary font-semibold">Organization</FormLabel>
+                              <FormControl>
+                                <Input placeholder="Company Name" className="h-12 bg-slate-50 border-slate-200 focus:border-secondary focus:ring-secondary/10" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+
+                      <FormField
+                        control={form.control}
+                        name="message"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-primary font-semibold">Message</FormLabel>
+                            <FormControl>
+                              <Textarea 
+                                placeholder="How can we help you?" 
+                                className="min-h-[120px] bg-slate-50 border-slate-200 focus:border-secondary focus:ring-secondary/10 resize-none" 
+                                {...field} 
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <Button 
+                        type="submit" 
+                        disabled={isSending}
+                        className="w-full h-12 text-base font-semibold bg-secondary hover:bg-secondary/90 shadow-lg shadow-secondary/20 transition-all hover:scale-[1.01] flex gap-2"
+                      >
+                        {isSending ? (
+                          <>
+                            <motion.div
+                              animate={{ rotate: 360 }}
+                              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                            >
+                              <Send className="w-4 h-4" />
+                            </motion.div>
+                            Sending...
+                          </>
+                        ) : (
+                          <>
+                            <Send className="w-4 h-4" />
+                            Send Message
+                          </>
+                        )}
+                      </Button>
+                    </form>
+                  </Form>
+                  <div className="mt-4 text-center">
+                    <p className="text-xs text-slate-400 italic">This form is for demonstration only. Email and WhatsApp features are active.</p>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </div>
