@@ -1,0 +1,137 @@
+You are a senior frontend React developer.
+Build a production-ready, fully responsive React JS landing page application for a pharmaceutical / healthcare consultancy firm.
+
+IMPORTANT CONSTRAINTS:
+- Frontend ONLY (no backend, no APIs, no database)
+- Use static data (JS/JSON)
+- No authentication
+- No cloud services
+- Code must be clean, modular, and scalable for future backend integration
+
+--------------------------------------------------
+TECH STACK
+--------------------------------------------------
+- React JS (Vite or Create React App)
+- JavaScript (ES6+)
+- Tailwind CSS (preferred) or plain CSS modules
+- React Router (only if needed)
+- No backend, no server code
+
+--------------------------------------------------
+BUSINESS CONTEXT
+--------------------------------------------------
+The consultancy provides:
+1. NABH Accreditation consultancy
+2. Pharmacovigilance (PV) Regulatory Documentation
+3. MSDS / SDS Authoring Services
+4. Toxicology Assessments
+
+Target audience:
+- Hospitals
+- Pharma companies
+- CROs
+- Chemical manufacturers
+
+--------------------------------------------------
+PAGES / SECTIONS REQUIRED
+--------------------------------------------------
+Single-page landing site with the following sections:
+
+1. Navbar
+- Logo -  image base logo 
+- Home
+- Services
+- Process
+- About
+- Contact
+- Mobile hamburger menu
+
+2. Hero Section
+- Headline: Pharma & Healthcare Compliance Experts
+- Sub-headline explaining NABH, PV, MSDS, Toxicology services
+- Primary CTA: "Request Consultation"
+- Secondary CTA: "View Services"
+
+3. Services Section (Cards)
+- NABH Accreditation
+- Pharmacovigilance Documentation
+- MSDS / SDS Services
+- Toxicology Assessments
+- Each card: title, short description, icon
+
+4. Why Choose Us
+- Compliance expertise
+- Regulatory accuracy
+- Confidential handling of data
+- End-to-end documentation support
+
+5. Process / How We Work
+- Step 1: Requirement Analysis
+- Step 2: Gap Assessment
+- Step 3: Documentation & Implementation
+- Step 4: Review & Submission
+
+6. About Section
+- Consultancy mission
+- Pharma / healthcare domain focus
+- Professional and trustworthy tone
+
+7. Contact Section
+- Static contact form UI (no submission logic)
+- Fields: Name, Email, Organization, Message
+- Display note: "This form is for demonstration only"
+
+8. Footer
+- Services list
+- Contact info (static)
+- Copyright
+- Disclaimer
+
+--------------------------------------------------
+DESIGN REQUIREMENTS
+--------------------------------------------------
+- Clean, professional, medical-grade design
+- Color theme:
+- Primary: #0B2545 (Deep Navy)
+- Accent: #1E9EA7 (Teal)
+- CTA: #D9B44A (Soft Gold)
+- Background: #F6F7F9
+- Text: #0F1724
+- Fully responsive (mobile, tablet, desktop)
+- Good spacing and typography
+- Smooth hover effects
+- Accessible contrast
+
+--------------------------------------------------
+CODE STRUCTURE
+--------------------------------------------------
+src/
+├── components/
+│ ├── Navbar.jsx
+│ ├── Hero.jsx
+│ ├── Services.jsx
+│ ├── Process.jsx
+│ ├── About.jsx
+│ ├── Contact.jsx
+│ └── Footer.jsx
+├── data/
+│ └── services.js
+├── App.jsx
+├── main.jsx
+└── index.css
+
+--------------------------------------------------
+QUALITY REQUIREMENTS
+--------------------------------------------------
+- Use reusable components
+- Use mapped data for services (no hardcoding in JSX)
+- No inline styles
+- Comment code where helpful
+- App should run with `npm install && npm run dev`
+- Include README.md with setup steps
+
+--------------------------------------------------
+DELIVERABLE
+--------------------------------------------------
+Return a complete runnable React project.
+Focus on clean UI, responsiveness, and professional presentation.
