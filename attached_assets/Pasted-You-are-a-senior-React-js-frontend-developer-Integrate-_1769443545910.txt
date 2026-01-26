@@ -1,0 +1,98 @@
+You are a senior React.js frontend developer.
+Integrate a FREE contact/request feature into an existing responsive React landing page.
+The project is frontend-only (no backend, no database, no APIs except free third-party services).
+
+--------------------------------------------------
+EXISTING PROJECT CONTEXT
+--------------------------------------------------
+- React JS landing page
+- Static data
+- Already has a Contact / Request form UI
+- No backend
+- Deployed as a static site
+- Target domain: Pharma / Healthcare consultancy
+
+--------------------------------------------------
+NEW FEATURE REQUIREMENT
+--------------------------------------------------
+When a user fills the form and clicks "Submit":
+
+1) An EMAIL should be sent to the business email using a FREE service
+2) User should ALSO be able to send the same request via WhatsApp (FREE, official method)
+
+--------------------------------------------------
+EMAIL INTEGRATION (FREE)
+--------------------------------------------------
+- Use EmailJS (https://www.emailjs.com)
+- Do NOT create backend
+- Use EmailJS React SDK
+- Email should include:
+  - Name
+  - Email
+  - Organization
+  - Selected Service
+  - Message
+- Show success or error message in UI
+- Limit logic to frontend only
+
+--------------------------------------------------
+WHATSAPP INTEGRATION (FREE)
+--------------------------------------------------
+- Use WhatsApp Click-to-Chat (https://wa.me)
+- No WhatsApp API
+- No paid services
+- Pre-fill WhatsApp message using form data
+- Open WhatsApp in new tab after form submission OR via a separate "Send on WhatsApp" button
+
+--------------------------------------------------
+FORM BEHAVIOR & UX
+--------------------------------------------------
+- Validate required fields (name, email, message)
+- Disable submit button while sending
+- Show loader or "Sending..."
+- On success:
+  - Show confirmation message
+  - Clear form
+  - Display a button: "Send Request on WhatsApp"
+
+--------------------------------------------------
+SECURITY & SPAM PREVENTION
+--------------------------------------------------
+- Add simple frontend validation
+- Add honeypot hidden input to reduce spam
+- Do NOT expose private EmailJS keys in code comments
+- Use environment variables for EmailJS public key
+
+--------------------------------------------------
+CODE REQUIREMENTS
+--------------------------------------------------
+- Modify existing Contact component only (do not rewrite whole app)
+- Create reusable helper functions:
+  - sendEmail()
+  - openWhatsApp()
+- Keep code clean and readable
+- No inline styles
+- No console logs in production code
+- Add comments where logic is non-obvious
+
+--------------------------------------------------
+EXPECTED FILE CHANGES
+--------------------------------------------------
+- Update Contact.jsx
+- Add emailService.js (or utils/email.js)
+- Update .env.example with:
+  - VITE_EMAILJS_SERVICE_ID
+  - VITE_EMAILJS_TEMPLATE_ID
+  - VITE_EMAILJS_PUBLIC_KEY
+
+--------------------------------------------------
+DELIVERABLE
+--------------------------------------------------
+Return updated React code that:
+- Sends email via EmailJS (free plan)
+- Opens WhatsApp with pre-filled message
+- Works in a static hosting environment
+- Requires no backend
+- Is easy to extend later
+
+Do NOT introduce backend, paid APIs, or WhatsApp bots.
