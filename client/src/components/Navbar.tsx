@@ -1,27 +1,31 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-scroll";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Pill, Stethoscope } from "lucide-react";
+import { Menu, X, Stethoscope } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
-
-const navLinks = [
-  { name: "Services", to: "services" },
-  { name: "Process", to: "process" },
-  { name: "About", to: "about" },
-];
+import { getNavbarData, getCompanyData } from "@/lib/dataLoader";
+import { smoothScrollTo } from "@/lib/scrollUtils";
+import { debounce } from "@/lib/scrollUtils";
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navbarData = getNavbarData();
+  const companyData = getCompanyData();
 
   useEffect(() => {
-    const handleScroll = () => {
+    const handleScroll = debounce(() => {
       setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
+    }, 10);
+    
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleNavClick = (sectionId: string) => {
+    smoothScrollTo(sectionId, 80);
+    setMobileMenuOpen(false);
+  };
 
   return (
     <>
@@ -37,9 +41,8 @@ export function Navbar() {
         )}
       >
         <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
-          <Link
-            to="hero"
-            smooth={true}
+          <button
+            onClick={() => handleNavClick("hero")}
             className="flex items-center gap-2 cursor-pointer group"
           >
             <div className="bg-primary p-2 rounded-lg text-white group-hover:bg-secondary transition-colors duration-300">
@@ -49,31 +52,28 @@ export function Navbar() {
               "font-display font-bold text-xl tracking-tight transition-colors",
               isScrolled ? "text-primary" : "text-primary"
             )}>
-              Pharma<span className="text-secondary">Consult</span>
+              {companyData.displayName.split("Consult")[0]}<span className="text-secondary">Consult</span>
             </span>
-          </Link>
+          </button>
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <Link
+            {navbarData.links.map((link) => (
+              <button
                 key={link.name}
-                to={link.to}
-                smooth={true}
-                offset={-80}
+                onClick={() => handleNavClick(link.to)}
                 className="text-sm font-medium text-muted-foreground hover:text-primary cursor-pointer transition-colors"
               >
                 {link.name}
-              </Link>
+              </button>
             ))}
-            <Link to="contact" smooth={true} offset={-80}>
-              <Button 
-                variant={isScrolled ? "default" : "default"}
-                className="bg-secondary hover:bg-secondary/90 text-white font-semibold shadow-lg shadow-secondary/20 transition-all hover:-translate-y-0.5"
-              >
-                Contact Us
-              </Button>
-            </Link>
+            <Button 
+              onClick={() => handleNavClick("contact")}
+              variant={isScrolled ? "default" : "default"}
+              className="bg-secondary hover:bg-secondary/90 text-white font-semibold shadow-lg shadow-secondary/20 transition-all hover:-translate-y-0.5"
+            >
+              {navbarData.contactButtonText}
+            </Button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -99,7 +99,7 @@ export function Navbar() {
             <div className="flex items-center justify-between p-6 border-b">
               <span className="font-display font-bold text-xl text-primary flex items-center gap-2">
                 <Stethoscope className="w-5 h-5 text-secondary" />
-                PharmaConsult
+                {companyData.displayName}
               </span>
               <button
                 className="p-2 text-muted-foreground hover:text-primary"
@@ -109,24 +109,22 @@ export function Navbar() {
               </button>
             </div>
             <div className="flex flex-col p-6 gap-6">
-              {navLinks.map((link) => (
-                <Link
+              {navbarData.links.map((link) => (
+                <button
                   key={link.name}
-                  to={link.to}
-                  smooth={true}
-                  offset={-80}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-2xl font-display font-semibold text-primary hover:text-secondary cursor-pointer"
+                  onClick={() => handleNavClick(link.to)}
+                  className="text-2xl font-display font-semibold text-primary hover:text-secondary cursor-pointer text-left"
                 >
                   {link.name}
-                </Link>
+                </button>
               ))}
               <div className="h-px bg-border my-2" />
-              <Link to="contact" smooth={true} onClick={() => setMobileMenuOpen(false)}>
-                <Button className="w-full text-lg py-6 bg-secondary hover:bg-secondary/90 shadow-lg">
-                  Request Consultation
-                </Button>
-              </Link>
+              <Button 
+                onClick={() => handleNavClick("contact")}
+                className="w-full text-lg py-6 bg-secondary hover:bg-secondary/90 shadow-lg"
+              >
+                {navbarData.mobileContactButtonText}
+              </Button>
             </div>
           </motion.div>
         )}

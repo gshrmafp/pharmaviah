@@ -14,6 +14,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Mail, MapPin, Phone, Send, CheckCircle2, MessageSquare } from "lucide-react";
+import { getContactData } from "@/lib/dataLoader";
+import * as Icons from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { sendEmail, openWhatsApp } from "@/lib/emailService";
 import { useToast } from "@/hooks/use-toast";
@@ -22,6 +24,7 @@ export function Contact() {
   const [isSending, setIsSending] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const { toast } = useToast();
+  const contactData = getContactData();
 
   const form = useForm<InsertContact>({
     resolver: zodResolver(insertContactSchema),
@@ -76,46 +79,31 @@ export function Contact() {
             <div className="absolute top-0 right-0 w-64 h-64 bg-secondary/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
             
             <div className="relative z-10">
-              <h3 className="text-3xl font-bold mb-6">Get in Touch</h3>
+              <h3 className="text-3xl font-bold mb-6">{contactData.title}</h3>
               <p className="text-primary-foreground/80 mb-12">
-                Ready to elevate your compliance standards? Fill out the form or contact us directly.
+                {contactData.description}
               </p>
 
               <div className="space-y-6">
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
-                    <Mail className="w-5 h-5 text-secondary" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-primary-foreground/60">Email</p>
-                    <p className="font-medium">contact@pharmaconsult.com</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
-                    <Phone className="w-5 h-5 text-secondary" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-primary-foreground/60">Phone</p>
-                    <p className="font-medium">+1 (555) 123-4567</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
-                    <MapPin className="w-5 h-5 text-secondary" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-primary-foreground/60">Office</p>
-                    <p className="font-medium">101 Compliance Way, Tech Park</p>
-                  </div>
-                </div>
+                {Object.entries(contactData.info).map(([key, info]) => {
+                  const IconComponent = Icons[info.icon as keyof typeof Icons] as React.ComponentType<{ className?: string }>;
+                  return (
+                    <div key={key} className="flex items-center gap-4">
+                      <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
+                        {IconComponent && <IconComponent className="w-5 h-5 text-secondary" />}
+                      </div>
+                      <div>
+                        <p className="text-sm text-primary-foreground/60">{info.label}</p>
+                        <p className="font-medium">{info.value}</p>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
             <div className="mt-12 pt-8 border-t border-white/10 text-sm text-primary-foreground/60">
-              Available Mon-Fri, 9am - 6pm EST
+              {contactData.hours}
             </div>
           </div>
 
@@ -136,8 +124,8 @@ export function Contact() {
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <h4 className="text-2xl font-bold text-primary">Thank You!</h4>
-                    <p className="text-slate-600">Your message has been sent successfully. We will contact you shortly.</p>
+                    <h4 className="text-2xl font-bold text-primary">{contactData.form.successTitle}</h4>
+                    <p className="text-slate-600">{contactData.form.successMessage}</p>
                   </div>
                   <div className="flex flex-col gap-3 pt-4">
                     <Button 
@@ -145,14 +133,14 @@ export function Contact() {
                       className="w-full h-12 bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold flex gap-2"
                     >
                       <MessageSquare className="w-5 h-5" />
-                      Send Request on WhatsApp
+                      {contactData.form.whatsappButton}
                     </Button>
                     <Button 
                       variant="outline" 
                       onClick={resetForm}
                       className="w-full h-12"
                     >
-                      Send Another Message
+                      {contactData.form.anotherMessageButton}
                     </Button>
                   </div>
                 </motion.div>
@@ -256,7 +244,7 @@ export function Contact() {
                     </form>
                   </Form>
                   <div className="mt-4 text-center">
-                    <p className="text-xs text-slate-400 italic">This form is for demonstration only. Email and WhatsApp features are active.</p>
+                    <p className="text-xs text-slate-400 italic">{contactData.form.disclaimer}</p>
                   </div>
                 </motion.div>
               )}

@@ -1,9 +1,14 @@
 import { Button } from "@/components/ui/button";
-import { Link } from "react-scroll";
 import { ArrowRight, CheckCircle2, ShieldCheck } from "lucide-react";
 import { motion } from "framer-motion";
+import { getHeroData } from "@/lib/dataLoader";
+import { smoothScrollTo } from "@/lib/scrollUtils";
+import * as Icons from "lucide-react";
 
 export function Hero() {
+  const heroData = getHeroData();
+  const CheckCircleIcon = Icons[heroData.features[0].icon as keyof typeof Icons] as React.ComponentType<{ className?: string }>;
+
   return (
     <section id="hero" className="relative min-h-[90vh] flex items-center pt-20 overflow-hidden bg-background">
       {/* Abstract Background Element */}
@@ -21,44 +26,50 @@ export function Hero() {
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-secondary/20 shadow-sm mb-6">
               <span className="flex h-2 w-2 rounded-full bg-secondary animate-pulse"></span>
               <span className="text-xs font-semibold text-primary tracking-wide uppercase">
-                ISO 9001:2015 Certified
+                {heroData.badge.text}
               </span>
             </div>
             
             <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold leading-[1.1] mb-6 text-primary">
-              Compliance <br />
+              {heroData.heading.line1} <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-teal-600">
-                Redefined.
+                {heroData.heading.line2}
               </span>
             </h1>
             
             <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-lg leading-relaxed">
-              We guide pharmaceutical companies through the complex maze of NABH accreditation, Pharmacovigilance (PV), and Toxicology assessments.
+              {heroData.description}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 mb-12">
-              <Link to="contact" smooth={true} offset={-80}>
-                <Button size="lg" className="w-full sm:w-auto text-base px-8 py-6 rounded-xl bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 transition-all hover:scale-[1.02]">
-                  Request Consultation
-                </Button>
-              </Link>
-              <Link to="services" smooth={true} offset={-80}>
-                <Button size="lg" variant="outline" className="w-full sm:w-auto text-base px-8 py-6 rounded-xl border-2 hover:bg-secondary/5 hover:text-secondary hover:border-secondary/20 transition-all group">
-                  View Services
-                  <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </Link>
+              <Button 
+                size="lg" 
+                onClick={() => smoothScrollTo(heroData.cta.primary.to, 80)}
+                className="w-full sm:w-auto text-base px-8 py-6 rounded-xl bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 transition-all hover:scale-[1.02]"
+              >
+                {heroData.cta.primary.text}
+              </Button>
+              <Button 
+                size="lg" 
+                variant="outline" 
+                onClick={() => smoothScrollTo(heroData.cta.secondary.to, 80)}
+                className="w-full sm:w-auto text-base px-8 py-6 rounded-xl border-2 hover:bg-secondary/5 hover:text-secondary hover:border-secondary/20 transition-all group"
+              >
+                {heroData.cta.secondary.text}
+                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Button>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-6 text-sm font-medium text-muted-foreground border-t border-border/50 pt-8">
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-5 h-5 text-secondary" />
-                <span>100% Audit Success Rate</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-5 h-5 text-secondary" />
-                <span>Global Regulatory Standards</span>
-              </div>
+              {heroData.features.map((feature, idx) => {
+                const IconComponent = Icons[feature.icon as keyof typeof Icons] as React.ComponentType<{ className?: string }>;
+                return (
+                  <div key={idx} className="flex items-center gap-2">
+                    {IconComponent && <IconComponent className="w-5 h-5 text-secondary" />}
+                    <span>{feature.text}</span>
+                  </div>
+                );
+              })}
             </div>
           </motion.div>
 
@@ -74,8 +85,8 @@ export function Hero() {
               {/* Using descriptive comment for Unsplash */}
               {/* pharmaceutical laboratory research clean blue modern */}
               <img 
-                src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&q=80&w=1000" 
-                alt="Pharmaceutical Research" 
+                src={heroData.image.url} 
+                alt={heroData.image.alt} 
                 className="object-cover w-full h-full transform transition-transform duration-700 group-hover:scale-105"
               />
               
@@ -86,14 +97,14 @@ export function Hero() {
                     <ShieldCheck className="w-6 h-6" />
                   </div>
                   <div>
-                    <p className="font-bold text-primary">Safety First</p>
-                    <p className="text-xs text-muted-foreground">Rigorous Protocols</p>
+                    <p className="font-bold text-primary">{heroData.badgeOverlay.title}</p>
+                    <p className="text-xs text-muted-foreground">{heroData.badgeOverlay.subtitle}</p>
                   </div>
                 </div>
                 <div className="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
-                  <div className="bg-secondary h-full w-[92%] rounded-full" />
+                  <div className="bg-secondary h-full rounded-full" style={{ width: `${heroData.badgeOverlay.progress}%` }} />
                 </div>
-                <p className="text-[10px] text-right mt-1 font-mono text-muted-foreground">Compliance: 99.8%</p>
+                <p className="text-[10px] text-right mt-1 font-mono text-muted-foreground">Compliance: {heroData.badgeOverlay.compliance}</p>
               </div>
             </div>
 

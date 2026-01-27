@@ -1,0 +1,24 @@
+{
+  "description": "Leading the way in pharmaceutical compliance and safety assessments. Your trusted partner for global regulatory success.",
+  "quickLinks": [
+    "Services",
+    "Process",
+    "About",
+    "Contact"
+  ],
+  "legalLinks": [
+    {
+      "text": "Privacy Policy",
+      "href": "#"
+    },
+    {
+      "text": "Terms of Service",
+      "href": "#"
+    },
+    {
+      "text": "Disclaimer",
+      "href": "#"
+    }
+  ],
+  "copyright": "Designed for Excellence."
+}

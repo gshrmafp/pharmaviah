@@ -1,6 +1,9 @@
 import { Check } from "lucide-react";
+import { getAboutData } from "@/lib/dataLoader";
 
 export function About() {
+  const aboutData = getAboutData();
+
   return (
     <section id="about" className="py-24 bg-primary text-primary-foreground relative overflow-hidden">
       {/* Background Pattern */}
@@ -10,18 +13,13 @@ export function About() {
       
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-8">Why PharmaConsult?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-8">{aboutData.title}</h2>
           <p className="text-lg md:text-xl text-primary-foreground/80 leading-relaxed mb-12">
-            Our mission is to empower healthcare organizations with robust compliance frameworks that ensure patient safety and regulatory success. With over 15 years of industry experience, we bridge the gap between scientific innovation and regulatory requirements.
+            {aboutData.description}
           </p>
           
           <div className="grid sm:grid-cols-2 gap-6 text-left">
-            {[
-              "End-to-end Confidentiality",
-              "Expert Team of Toxicologists",
-              "Regulatory Accuracy Guaranteed",
-              "Global Compliance Standards"
-            ].map((item, i) => (
+            {aboutData.features.map((item, i) => (
               <div key={i} className="flex items-center gap-3 bg-white/5 rounded-lg p-4 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-colors">
                 <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center shrink-0">
                   <Check className="w-5 h-5 text-white" />

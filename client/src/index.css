@@ -69,6 +69,11 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Scroll offset for sections */
+section[id] {
+  scroll-margin-top: 80px;
+}
+
 /* Utility for glass effect */
 .glass-panel {
   @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-xl;

@@ -1,0 +1,129 @@
+{
+  "section": {
+    "badge": "Our Expertise",
+    "title": "Comprehensive Regulatory Solutions",
+    "description": "We provide specialized consulting services tailored to the pharmaceutical and healthcare industries."
+  },
+  "services": [
+    {
+      "id": "nabh",
+      "icon": "Building2",
+      "title": "NABH Accreditation",
+      "shortDescription": "Complete guidance for hospitals and healthcare providers to achieve and maintain National Accreditation Board for Hospitals standards.",
+      "color": "text-blue-600",
+      "bg": "bg-blue-50",
+      "fullDescription": "NABH (National Accreditation Board for Hospitals) accreditation is a comprehensive quality assurance program that ensures healthcare organizations meet the highest standards of patient care, safety, and operational excellence.",
+      "features": [
+        "Gap analysis and readiness assessment",
+        "Policy and procedure development",
+        "Staff training and competency building",
+        "Documentation and quality management systems",
+        "Pre-assessment and mock surveys",
+        "Post-accreditation support and maintenance"
+      ],
+      "benefits": [
+        "Enhanced patient safety and care quality",
+        "Improved operational efficiency",
+        "Increased credibility and market reputation",
+        "Better risk management",
+        "Compliance with national and international standards"
+      ],
+      "useCases": [
+        "Hospitals seeking quality certification",
+        "Healthcare facilities preparing for accreditation",
+        "Organizations maintaining existing accreditation",
+        "Multi-specialty hospitals and clinics"
+      ]
+    },
+    {
+      "id": "pharmacovigilance",
+      "icon": "Activity",
+      "title": "Pharmacovigilance (PV)",
+      "shortDescription": "Comprehensive drug safety monitoring, adverse event reporting, and risk management planning for pharmaceutical products.",
+      "color": "text-emerald-600",
+      "bg": "bg-emerald-50",
+      "fullDescription": "Pharmacovigilance is the science and activities relating to the detection, assessment, understanding, and prevention of adverse effects or any other drug-related problems. Our comprehensive PV services ensure regulatory compliance and patient safety.",
+      "features": [
+        "Adverse event case processing and reporting",
+        "Signal detection and management",
+        "Risk management plan (RMP) development",
+        "Periodic safety update reports (PSURs)",
+        "Safety database management",
+        "Medical writing and documentation"
+      ],
+      "benefits": [
+        "Regulatory compliance with global standards",
+        "Early detection of safety signals",
+        "Proactive risk management",
+        "Enhanced patient safety",
+        "Cost-effective safety monitoring"
+      ],
+      "useCases": [
+        "Pharmaceutical companies launching new products",
+        "Ongoing safety monitoring for marketed products",
+        "Regulatory submission support",
+        "Post-marketing surveillance programs"
+      ]
+    },
+    {
+      "id": "msds",
+      "icon": "FileText",
+      "title": "MSDS/SDS Authoring",
+      "shortDescription": "Expert authoring of Material Safety Data Sheets compliant with GHS, REACH, and global regulatory requirements.",
+      "color": "text-amber-600",
+      "bg": "bg-amber-50",
+      "fullDescription": "Material Safety Data Sheets (MSDS) or Safety Data Sheets (SDS) are critical documents that provide comprehensive information about chemical substances and mixtures. Our expert team ensures compliance with GHS, REACH, and other global regulatory frameworks.",
+      "features": [
+        "GHS-compliant SDS authoring",
+        "REACH compliance documentation",
+        "Multi-language SDS preparation",
+        "Regulatory gap analysis",
+        "SDS review and updates",
+        "Hazard classification and labeling"
+      ],
+      "benefits": [
+        "Full regulatory compliance",
+        "Accurate hazard communication",
+        "Reduced regulatory risks",
+        "Global market access",
+        "Professional documentation standards"
+      ],
+      "useCases": [
+        "Chemical manufacturers and suppliers",
+        "Pharmaceutical raw material suppliers",
+        "Import/export compliance",
+        "Regulatory updates and renewals"
+      ]
+    },
+    {
+      "id": "toxicology",
+      "icon": "FlaskConical",
+      "title": "Toxicology Assessments",
+      "shortDescription": "Detailed toxicological risk assessments (TRA), PDE calculation, and impurity profiling for drug substances.",
+      "color": "text-purple-600",
+      "bg": "bg-purple-50",
+      "fullDescription": "Toxicology assessments are essential for evaluating the safety of pharmaceutical products, impurities, and contaminants. Our expert toxicologists provide comprehensive risk assessments to support regulatory submissions and ensure patient safety.",
+      "features": [
+        "Permitted Daily Exposure (PDE) calculations",
+        "Toxicological risk assessments (TRA)",
+        "Impurity profiling and evaluation",
+        "Genotoxicity assessments",
+        "Carcinogenicity risk evaluation",
+        "Literature reviews and data analysis"
+      ],
+      "benefits": [
+        "Regulatory submission support",
+        "Evidence-based safety evaluations",
+        "Risk-based decision making",
+        "Cost-effective safety assessments",
+        "Expert toxicological guidance"
+      ],
+      "useCases": [
+        "Drug substance and product development",
+        "Impurity qualification studies",
+        "Cleaning validation support",
+        "Regulatory submission documentation"
+      ]
+    }
+  ]
+}
