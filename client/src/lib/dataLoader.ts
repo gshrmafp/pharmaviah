@@ -1,11 +1,4 @@
-import companyData from "@/data/company.json";
-import navbarData from "@/data/navbar.json";
-import heroData from "@/data/hero.json";
-import servicesData from "@/data/services.json";
-import aboutData from "@/data/about.json";
-import processData from "@/data/process.json";
-import contactData from "@/data/contact.json";
-import footerData from "@/data/footer.json";
+import siteDataResponse from "@/data/siteData.json";
 
 // Type definitions
 export interface CompanyData {
@@ -161,30 +154,44 @@ let cachedData: {
   footer?: FooterData;
 } = {};
 
+const siteData = siteDataResponse as {
+  success: boolean;
+  data: {
+    company: CompanyData;
+    navbar: NavbarData;
+    hero: HeroData;
+    services: ServicesData;
+    about: AboutData;
+    process: ProcessData;
+    contact: ContactData;
+    footer: FooterData;
+  };
+};
+
 export function getCompanyData(): CompanyData {
   if (!cachedData.company) {
-    cachedData.company = companyData as CompanyData;
+    cachedData.company = siteData.data.company;
   }
   return cachedData.company;
 }
 
 export function getNavbarData(): NavbarData {
   if (!cachedData.navbar) {
-    cachedData.navbar = navbarData as NavbarData;
+    cachedData.navbar = siteData.data.navbar;
   }
   return cachedData.navbar;
 }
 
 export function getHeroData(): HeroData {
   if (!cachedData.hero) {
-    cachedData.hero = heroData as HeroData;
+    cachedData.hero = siteData.data.hero;
   }
   return cachedData.hero;
 }
 
 export function getServicesData(): ServicesData {
   if (!cachedData.services) {
-    cachedData.services = servicesData as ServicesData;
+    cachedData.services = siteData.data.services;
   }
   return cachedData.services;
 }
@@ -196,28 +203,28 @@ export function getServiceById(id: string): Service | undefined {
 
 export function getAboutData(): AboutData {
   if (!cachedData.about) {
-    cachedData.about = aboutData as AboutData;
+    cachedData.about = siteData.data.about;
   }
   return cachedData.about;
 }
 
 export function getProcessData(): ProcessData {
   if (!cachedData.process) {
-    cachedData.process = processData as ProcessData;
+    cachedData.process = siteData.data.process;
   }
   return cachedData.process;
 }
 
 export function getContactData(): ContactData {
   if (!cachedData.contact) {
-    cachedData.contact = contactData as ContactData;
+    cachedData.contact = siteData.data.contact;
   }
   return cachedData.contact;
 }
 
 export function getFooterData(): FooterData {
   if (!cachedData.footer) {
-    cachedData.footer = footerData as FooterData;
+    cachedData.footer = siteData.data.footer;
   }
   return cachedData.footer;
 }

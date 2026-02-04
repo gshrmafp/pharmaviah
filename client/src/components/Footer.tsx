@@ -15,7 +15,7 @@ export function Footer() {
             <div className="flex items-center gap-2 mb-6">
               <Stethoscope className="w-6 h-6 text-secondary" />
               <span className="font-display font-bold text-2xl">
-                {companyData.displayName.split("Consult")[0]}<span className="text-secondary">Consult</span>
+                {companyData.displayName}
               </span>
             </div>
             <p className="text-primary-foreground/70 max-w-sm mb-6 leading-relaxed">

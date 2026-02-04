@@ -1,0 +1,295 @@
+{
+  "success": true,
+  "data": {
+    "company": {
+      "name": "PharmViah",
+      "tagline": "Leading the way in pharmaceutical compliance and safety assessments. Your trusted partner for global regulatory success.",
+      "displayName": "PharmViah",
+      "icon": "Stethoscope"
+    },
+    "navbar": {
+      "links": [
+        { "name": "Services", "to": "services" },
+        { "name": "Process", "to": "process" },
+        { "name": "About", "to": "about" }
+      ],
+      "contactButtonText": "Contact Us",
+      "mobileContactButtonText": "Request Consultation"
+    },
+    "hero": {
+      "badge": {
+        "text": "ISO 9001:2015 Certified"
+      },
+      "heading": {
+        "line1": "Toxicology",
+        "line2": "& Compliance Excellence.",
+        "gradientStart": "secondary",
+        "gradientEnd": "teal-600"
+      },
+      "description": "We guide pharmaceutical companies through Toxicology Assessments, Regulatory Documentation, Medical QC, MSDS/SDS Authoring, and NABH Accreditation — with Toxicology at the forefront of every solution.",
+      "cta": {
+        "primary": {
+          "text": "Request Consultation",
+          "to": "contact"
+        },
+        "secondary": {
+          "text": "View Services",
+          "to": "services"
+        }
+      },
+      "features": [
+        {
+          "text": "Toxicology & Safety First",
+          "icon": "CheckCircle2"
+        },
+        {
+          "text": "Global Regulatory Standards",
+          "icon": "CheckCircle2"
+        }
+      ],
+      "image": {
+        "url": "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&q=80&w=1000",
+        "alt": "Pharmaceutical Research"
+      },
+      "badgeOverlay": {
+        "title": "Safety First",
+        "subtitle": "Rigorous Protocols",
+        "progress": 92,
+        "compliance": "99.8%"
+      }
+    },
+    "services": {
+      "section": {
+        "badge": "Our Expertise",
+        "title": "Comprehensive Regulatory Solutions",
+        "description": "We provide specialized consulting services tailored to the pharmaceutical and healthcare industries."
+      },
+      "services": [
+        {
+          "id": "toxicology",
+          "icon": "FlaskConical",
+          "title": "Toxicology Assessments",
+          "shortDescription": "Toxicological Risk Assessment (TRA), Permitted Daily Exposure (PDE) calculations, impurity profiling, and safety & regulatory risk evaluation for drug substances.",
+          "color": "text-purple-600",
+          "bg": "bg-purple-50",
+          "fullDescription": "Toxicology assessments are essential for evaluating the safety of pharmaceutical products, impurities, and contaminants. Our expert toxicologists provide comprehensive Toxicological Risk Assessments (TRA), Permitted Daily Exposure (PDE) calculations, impurity profiling, and safety & regulatory risk evaluation to support regulatory submissions and ensure patient safety.",
+          "features": [
+            "Toxicological Risk Assessment (TRA)",
+            "Permitted Daily Exposure (PDE) calculations",
+            "Impurity profiling and evaluation",
+            "Safety and regulatory risk evaluation",
+            "Genotoxicity assessments",
+            "Carcinogenicity risk evaluation",
+            "Literature reviews and data analysis"
+          ],
+          "benefits": [
+            "Regulatory submission support",
+            "Evidence-based safety evaluations",
+            "Risk-based decision making",
+            "Cost-effective safety assessments",
+            "Expert toxicological guidance"
+          ],
+          "useCases": [
+            "Drug substance and product development",
+            "Impurity qualification studies",
+            "Cleaning validation support",
+            "Regulatory submission documentation"
+          ]
+        },
+        {
+          "id": "regulatory-documentation",
+          "icon": "FileCheck",
+          "title": "Regulatory Documentation & Medical Services",
+          "shortDescription": "Document formatting, QC, medical data abstraction, medical writing QC, and SOP writing for pharma and clinical operations.",
+          "color": "text-emerald-600",
+          "bg": "bg-emerald-50",
+          "fullDescription": "End-to-end regulatory documentation and medical services including document formatting and QC, medical data abstraction and extraction, medical QC and review, and SOP writing. We ensure GCP compliance, accuracy, and audit readiness for pharmaceutical and clinical operations.",
+          "features": [
+            "CSR, Protocol, and IB formatting",
+            "TMF document QC",
+            "SDV tracking sheets review",
+            "eCTD document QC (basic level)",
+            "SOP formatting and version control",
+            "CRF to Excel data extraction",
+            "Safety data extraction",
+            "Literature data tables and meta-analysis data abstraction",
+            "Medical writing QC",
+            "Grammar and consistency check",
+            "GCP compliance check",
+            "Plagiarism and reference check",
+            "Pharma SOPs, Clinical SOPs, and Audit readiness SOPs"
+          ],
+          "benefits": [
+            "Full regulatory compliance",
+            "Audit-ready documentation",
+            "Quality-assured deliverables",
+            "Streamlined submission readiness",
+            "Expert medical and regulatory oversight"
+          ],
+          "useCases": [
+            "Clinical trial documentation support",
+            "Regulatory dossier preparation",
+            "TMF management and QC",
+            "SOP development and customization",
+            "Medical data abstraction projects"
+          ]
+        },
+        {
+          "id": "msds",
+          "icon": "FileText",
+          "title": "MSDS / SDS Authoring",
+          "shortDescription": "Expert authoring of Material Safety Data Sheets compliant with GHS, REACH, and global regulatory requirements.",
+          "color": "text-amber-600",
+          "bg": "bg-amber-50",
+          "fullDescription": "Material Safety Data Sheets (MSDS) or Safety Data Sheets (SDS) are critical documents that provide comprehensive information about chemical substances and mixtures. Our expert team ensures compliance with GHS, REACH, and other global regulatory frameworks.",
+          "features": [
+            "GHS-compliant SDS authoring",
+            "REACH compliance documentation",
+            "Multi-language SDS preparation",
+            "Regulatory gap analysis",
+            "SDS review and updates",
+            "Hazard classification and labeling"
+          ],
+          "benefits": [
+            "Full regulatory compliance",
+            "Accurate hazard communication",
+            "Reduced regulatory risks",
+            "Global market access",
+            "Professional documentation standards"
+          ],
+          "useCases": [
+            "Chemical manufacturers and suppliers",
+            "Pharmaceutical raw material suppliers",
+            "Import/export compliance",
+            "Regulatory updates and renewals"
+          ]
+        },
+        {
+          "id": "nabh",
+          "icon": "Building2",
+          "title": "NABH Accreditation",
+          "shortDescription": "Complete guidance for hospitals and healthcare providers to achieve and maintain National Accreditation Board for Hospitals standards.",
+          "color": "text-blue-600",
+          "bg": "bg-blue-50",
+          "fullDescription": "NABH (National Accreditation Board for Hospitals) accreditation is a comprehensive quality assurance program that ensures healthcare organizations meet the highest standards of patient care, safety, and operational excellence.",
+          "features": [
+            "Gap analysis and readiness assessment",
+            "Policy and procedure development",
+            "Staff training and competency building",
+            "Documentation and quality management systems",
+            "Pre-assessment and mock surveys",
+            "Post-accreditation support and maintenance"
+          ],
+          "benefits": [
+            "Enhanced patient safety and care quality",
+            "Improved operational efficiency",
+            "Increased credibility and market reputation",
+            "Better risk management",
+            "Compliance with national and international standards"
+          ],
+          "useCases": [
+            "Hospitals seeking quality certification",
+            "Healthcare facilities preparing for accreditation",
+            "Organizations maintaining existing accreditation",
+            "Multi-specialty hospitals and clinics"
+          ]
+        }
+      ]
+    },
+    "about": {
+      "title": "Why PharmViah?",
+      "description": "Our mission is to empower healthcare organizations with robust compliance frameworks that ensure patient safety and regulatory success. With over 15 years of industry experience, we bridge the gap between scientific innovation and regulatory requirements.",
+      "features": [
+        "End-to-end Confidentiality",
+        "Expert Team of Toxicologists",
+        "Regulatory Accuracy Guaranteed",
+        "Global Compliance Standards"
+      ]
+    },
+    "process": {
+      "badge": "Our Process",
+      "title": "Streamlined Path to Compliance",
+      "description": "We've developed a proven 4-step methodology that ensures accuracy, efficiency, and successful outcomes for every project.",
+      "steps": [
+        {
+          "icon": "Search",
+          "title": "Analysis",
+          "description": "Initial requirement gathering & gap analysis."
+        },
+        {
+          "icon": "ClipboardCheck",
+          "title": "Assessment",
+          "description": "Detailed technical & compliance audit."
+        },
+        {
+          "icon": "FileCheck",
+          "title": "Documentation",
+          "description": "Rigorous preparation of dossiers & reports."
+        },
+        {
+          "icon": "Send",
+          "title": "Submission",
+          "description": "Final review and regulatory submission."
+        }
+      ],
+      "image": {
+        "url": "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80&w=1000",
+        "alt": "Team Collaboration",
+        "quote": "Excellence is not an act, but a habit."
+      }
+    },
+    "contact": {
+      "title": "Get in Touch",
+      "description": "Ready to elevate your compliance standards? Fill out the form or contact us directly at contact@pharmviah.com.",
+      "info": {
+        "email": {
+          "label": "Email",
+          "value": "contact@pharmviah.com",
+          "icon": "Mail"
+        },
+        "phone": {
+          "label": "Phone",
+          "value": "+91 9876543210",
+          "icon": "Phone"
+        },
+        "address": {
+          "label": "Office",
+          "value": "Gurgaon, Haryana, India",
+          "icon": "MapPin"
+        }
+      },
+      "hours": "Available Mon-Fri, 9am - 6pm IST",
+      "form": {
+        "successTitle": "Thank You!",
+        "successMessage": "Your message has been sent successfully. We will contact you shortly at the email provided.",
+        "whatsappButton": "Send Request on WhatsApp",
+        "anotherMessageButton": "Send Another Message",
+        "disclaimer": "For inquiries, reach us at contact@pharmviah.com. Email and WhatsApp features are active."
+      }
+    },
+    "footer": {
+      "description": "Leading the way in pharmaceutical compliance and safety assessments. Your trusted partner for global regulatory success. Contact: contact@pharmviah.com",
+      "quickLinks": [
+        "Services",
+        "Process",
+        "About",
+        "Contact"
+      ],
+      "legalLinks": [
+        {
+          "text": "Privacy Policy",
+          "href": "#"
+        },
+        {
+          "text": "Terms of Service",
+          "href": "#"
+        },
+        {
+          "text": "Disclaimer",
+          "href": "#"
+        }
+      ],
+      "copyright": "Designed for Excellence."
+    }
+  }
+}

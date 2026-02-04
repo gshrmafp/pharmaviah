@@ -1,9 +1,0 @@
-{
-  "links": [
-    { "name": "Services", "to": "services" },
-    { "name": "Process", "to": "process" },
-    { "name": "About", "to": "about" }
-  ],
-  "contactButtonText": "Contact Us",
-  "mobileContactButtonText": "Request Consultation"
-}
