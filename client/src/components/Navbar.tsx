@@ -52,7 +52,7 @@ export function Navbar() {
               "font-display font-bold text-xl tracking-tight transition-colors",
               isScrolled ? "text-primary" : "text-primary"
             )}>
-              {companyData.displayName.split("Consult")[0]}<span className="text-secondary">Consult</span>
+              {companyData.displayName.split("Consult")[0]}
             </span>
           </button>
 

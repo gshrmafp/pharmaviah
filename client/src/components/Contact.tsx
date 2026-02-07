@@ -165,7 +165,7 @@ export function Contact() {
                           <FormItem>
                             <FormLabel className="text-primary font-semibold">Full Name</FormLabel>
                             <FormControl>
-                              <Input placeholder="John Doe" className="h-12 bg-slate-50 border-slate-200 focus:border-secondary focus:ring-secondary/10" {...field} />
+                              <Input placeholder="Name" className="h-12 bg-slate-50 border-slate-200 focus:border-secondary focus:ring-secondary/10" {...field} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -180,7 +180,7 @@ export function Contact() {
                             <FormItem>
                               <FormLabel className="text-primary font-semibold">Email</FormLabel>
                               <FormControl>
-                                <Input placeholder="john@company.com" className="h-12 bg-slate-50 border-slate-200 focus:border-secondary focus:ring-secondary/10" {...field} />
+                                <Input placeholder="contact@pharmviah.com" className="h-12 bg-slate-50 border-slate-200 focus:border-secondary focus:ring-secondary/10" {...field} />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
@@ -193,7 +193,7 @@ export function Contact() {
                             <FormItem>
                               <FormLabel className="text-primary font-semibold">Organization</FormLabel>
                               <FormControl>
-                                <Input placeholder="Company Name" className="h-12 bg-slate-50 border-slate-200 focus:border-secondary focus:ring-secondary/10" {...field} />
+                                <Input placeholder="Pharmviah" className="h-12 bg-slate-50 border-slate-200 focus:border-secondary focus:ring-secondary/10" {...field} />
                               </FormControl>
                               <FormMessage />
                             </FormItem>

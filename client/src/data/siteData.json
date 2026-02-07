@@ -2,9 +2,9 @@
   "success": true,
   "data": {
     "company": {
-      "name": "PharmViah",
+      "name": "Pharmviah",
       "tagline": "Leading the way in pharmaceutical compliance and safety assessments. Your trusted partner for global regulatory success.",
-      "displayName": "PharmViah",
+      "displayName": "Pharmviah",
       "icon": "Stethoscope"
     },
     "navbar": {
@@ -249,12 +249,17 @@
         },
         "phone": {
           "label": "Phone",
-          "value": "+91 9876543210",
+          "value": "+91 9354140067",
           "icon": "Phone"
         },
-        "address": {
-          "label": "Office",
-          "value": "Gurgaon, Haryana, India",
+        "address1": {
+          "label": "UK Office",
+          "value": "C88 0BJ 18 Lester piggot way, New market Cambridgeshire, UK",
+          "icon": "MapPin"
+        },
+        "address2": {
+          "label": "India Office",
+          "value": "Manesar, Haryana, India",
           "icon": "MapPin"
         }
       },
