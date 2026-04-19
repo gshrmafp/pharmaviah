@@ -126,7 +126,6 @@ export interface ContactData {
   form: {
     successTitle: string;
     successMessage: string;
-    whatsappButton: string;
     anotherMessageButton: string;
     disclaimer: string;
   };

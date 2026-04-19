@@ -252,11 +252,6 @@
           "value": "+91 9354140067",
           "icon": "Phone"
         },
-        "address1": {
-          "label": "UK Office",
-          "value": "C88 0BJ 18 Lester piggot way, New market Cambridgeshire, UK",
-          "icon": "MapPin"
-        },
         "address2": {
           "label": "India Office",
           "value": "Manesar, Haryana, India",
@@ -267,9 +262,8 @@
       "form": {
         "successTitle": "Thank You!",
         "successMessage": "Your message has been sent successfully. We will contact you shortly at the email provided.",
-        "whatsappButton": "Send Request on WhatsApp",
         "anotherMessageButton": "Send Another Message",
-        "disclaimer": "For inquiries, reach us at contact@pharmviah.com. Email and WhatsApp features are active."
+        "disclaimer": "For inquiries, reach us at contact@pharmviah.com."
       }
     },
     "footer": {

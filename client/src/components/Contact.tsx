@@ -13,11 +13,11 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Mail, MapPin, Phone, Send, CheckCircle2, MessageSquare } from "lucide-react";
+import { Mail, MapPin, Phone, Send, CheckCircle2 } from "lucide-react";
 import { getContactData } from "@/lib/dataLoader";
 import * as Icons from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { sendEmail, openWhatsApp } from "@/lib/emailService";
+import { sendEmail } from "@/lib/emailService";
 import { useToast } from "@/hooks/use-toast";
 
 export function Contact() {
@@ -48,19 +48,20 @@ export function Contact() {
         description: "We have received your request and will get back to you soon.",
       });
     } catch (error) {
+      console.error("EmailJS send failed:", error);
+      const emailjsError = error as { status?: number; text?: string; message?: string };
+      const detail =
+        emailjsError?.text ||
+        emailjsError?.message ||
+        (typeof error === "string" ? error : "Unknown error");
       toast({
-        title: "Error",
-        description: "Failed to send message. Please try again or use WhatsApp.",
+        title: `Error${emailjsError?.status ? ` (${emailjsError.status})` : ""}`,
+        description: `Failed to send: ${detail}`,
         variant: "destructive",
       });
     } finally {
       setIsSending(false);
     }
-  };
-
-  const handleWhatsApp = () => {
-    const data = form.getValues();
-    openWhatsApp(data);
   };
 
   const resetForm = () => {
@@ -128,13 +129,6 @@ export function Contact() {
                     <p className="text-slate-600">{contactData.form.successMessage}</p>
                   </div>
                   <div className="flex flex-col gap-3 pt-4">
-                    <Button 
-                      onClick={handleWhatsApp}
-                      className="w-full h-12 bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold flex gap-2"
-                    >
-                      <MessageSquare className="w-5 h-5" />
-                      {contactData.form.whatsappButton}
-                    </Button>
                     <Button 
                       variant="outline" 
                       onClick={resetForm}
