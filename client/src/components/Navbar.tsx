@@ -1,17 +1,21 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Stethoscope } from "lucide-react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { getNavbarData, getCompanyData } from "@/lib/dataLoader";
 import { smoothScrollTo } from "@/lib/scrollUtils";
 import { debounce } from "@/lib/scrollUtils";
+import * as Icons from "lucide-react";
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navbarData = getNavbarData();
   const companyData = getCompanyData();
+  const BrandIcon = Icons[
+    companyData.icon as keyof typeof Icons
+  ] as React.ComponentType<{ className?: string }>;
 
   useEffect(() => {
     const handleScroll = debounce(() => {
@@ -34,99 +38,135 @@ export function Navbar() {
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b",
+          "fixed left-0 right-0 top-0 z-50 transition-all duration-300",
           isScrolled
-            ? "bg-white/90 backdrop-blur-md py-4 shadow-sm border-border/50"
-            : "bg-transparent py-6 border-transparent"
+            ? "bg-white/70 py-3 backdrop-blur-xl"
+            : "bg-transparent py-4 sm:py-5"
         )}
       >
-        <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
+        <div className="container mx-auto px-4 md:px-6">
+          <div
+            className={cn(
+              "flex items-center justify-between rounded-2xl border px-4 py-3 shadow-lg shadow-slate-900/5 transition-all duration-300 md:px-5",
+              isScrolled
+                ? "border-white/60 bg-white/85 backdrop-blur-xl"
+                : "border-white/50 bg-white/70 backdrop-blur-lg"
+            )}
+          >
           <button
             onClick={() => handleNavClick("hero")}
-            className="flex items-center gap-2 cursor-pointer group"
+            className="group flex items-center gap-3 cursor-pointer"
           >
-            <div className="bg-primary p-2 rounded-lg text-white group-hover:bg-secondary transition-colors duration-300">
-              <Stethoscope className="w-6 h-6" />
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-secondary text-white shadow-md transition-transform duration-300 group-hover:scale-105">
+              {BrandIcon && <BrandIcon className="h-5 w-5" />}
             </div>
-            <span className={cn(
-              "font-display font-bold text-xl tracking-tight transition-colors",
-              isScrolled ? "text-primary" : "text-primary"
-            )}>
-              {companyData.displayName.split("Consult")[0]}
-            </span>
+            <div className="text-left">
+              <p className="text-lg font-bold tracking-tight text-primary sm:text-xl">
+                {companyData.displayName}
+              </p>
+              <p className="hidden text-[11px] font-medium uppercase tracking-[0.24em] text-slate-500 sm:block">
+                Regulatory Excellence
+              </p>
+            </div>
           </button>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-8">
-            {navbarData.links.map((link) => (
-              <button
-                key={link.name}
-                onClick={() => handleNavClick(link.to)}
-                className="text-sm font-medium text-muted-foreground hover:text-primary cursor-pointer transition-colors"
-              >
-                {link.name}
-              </button>
-            ))}
-            <Button 
+          <div className="hidden items-center gap-3 md:flex">
+            <div className="flex items-center gap-1 rounded-full border border-slate-200/70 bg-white/80 p-1.5 shadow-inner">
+              {navbarData.links.map((link) => (
+                <button
+                  key={link.name}
+                  onClick={() => handleNavClick(link.to)}
+                  className="rounded-full px-4 py-2 text-sm font-semibold text-slate-600 transition-all hover:bg-slate-50 hover:text-primary"
+                >
+                  {link.name}
+                </button>
+              ))}
+            </div>
+            <Button
               onClick={() => handleNavClick("contact")}
-              variant={isScrolled ? "default" : "default"}
-              className="bg-secondary hover:bg-secondary/90 text-white font-semibold shadow-lg shadow-secondary/20 transition-all hover:-translate-y-0.5"
+              className="h-11 rounded-full bg-secondary px-5 font-semibold text-white shadow-lg shadow-secondary/20 transition-all hover:-translate-y-0.5 hover:bg-secondary/90"
             >
               {navbarData.contactButtonText}
+              <ArrowUpRight className="ml-2 h-4 w-4" />
             </Button>
           </div>
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2 text-primary"
+            className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200/70 bg-white/80 text-primary shadow-sm md:hidden"
             onClick={() => setMobileMenuOpen(true)}
+            aria-label="Open navigation menu"
           >
             <Menu className="w-6 h-6" />
           </button>
+          </div>
         </div>
       </motion.nav>
 
       {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, x: "100%" }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: "100%" }}
-            transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed inset-0 z-[60] bg-background md:hidden flex flex-col"
-          >
-            <div className="flex items-center justify-between p-6 border-b">
-              <span className="font-display font-bold text-xl text-primary flex items-center gap-2">
-                <Stethoscope className="w-5 h-5 text-secondary" />
-                {companyData.displayName}
-              </span>
-              <button
-                className="p-2 text-muted-foreground hover:text-primary"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <X className="w-6 h-6" />
-              </button>
-            </div>
-            <div className="flex flex-col p-6 gap-6">
-              {navbarData.links.map((link) => (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[60] bg-slate-950/35 backdrop-blur-sm md:hidden"
+              onClick={() => setMobileMenuOpen(false)}
+            />
+            <motion.div
+              initial={{ opacity: 0, y: -24 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -24 }}
+              transition={{ type: "spring", damping: 24, stiffness: 220 }}
+              className="fixed inset-x-4 top-4 z-[70] rounded-[2rem] border border-white/70 bg-white/95 shadow-2xl backdrop-blur-xl md:hidden"
+            >
+              <div className="flex items-center justify-between border-b border-slate-100 px-5 py-5">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-secondary text-white">
+                    {BrandIcon && <BrandIcon className="h-5 w-5" />}
+                  </div>
+                  <div>
+                    <p className="text-base font-bold text-primary">
+                      {companyData.displayName}
+                    </p>
+                    <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500">
+                      Navigation
+                    </p>
+                  </div>
+                </div>
                 <button
-                  key={link.name}
-                  onClick={() => handleNavClick(link.to)}
-                  className="text-2xl font-display font-semibold text-primary hover:text-secondary cursor-pointer text-left"
+                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-slate-500 transition-colors hover:text-primary"
+                  onClick={() => setMobileMenuOpen(false)}
+                  aria-label="Close navigation menu"
                 >
-                  {link.name}
+                  <X className="w-5 h-5" />
                 </button>
-              ))}
-              <div className="h-px bg-border my-2" />
-              <Button 
-                onClick={() => handleNavClick("contact")}
-                className="w-full text-lg py-6 bg-secondary hover:bg-secondary/90 shadow-lg"
-              >
-                {navbarData.mobileContactButtonText}
-              </Button>
-            </div>
-          </motion.div>
+              </div>
+
+              <div className="flex flex-col gap-3 p-5">
+                {navbarData.links.map((link, index) => (
+                  <button
+                    key={link.name}
+                    onClick={() => handleNavClick(link.to)}
+                    className="flex items-center justify-between rounded-2xl border border-slate-100 bg-slate-50 px-4 py-4 text-left text-lg font-semibold text-primary transition-all hover:border-secondary/20 hover:bg-secondary/5 hover:text-secondary"
+                  >
+                    <span>{link.name}</span>
+                    <span className="text-sm text-slate-400">0{index + 1}</span>
+                  </button>
+                ))}
+
+                <Button
+                  onClick={() => handleNavClick("contact")}
+                  className="mt-2 h-14 w-full rounded-2xl bg-secondary text-base font-semibold shadow-lg shadow-secondary/20 hover:bg-secondary/90"
+                >
+                  {navbarData.mobileContactButtonText}
+                  <ArrowUpRight className="ml-2 h-4 w-4" />
+                </Button>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </>

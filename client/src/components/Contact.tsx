@@ -13,12 +13,32 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Mail, MapPin, Phone, Send, CheckCircle2 } from "lucide-react";
-import { getContactData } from "@/lib/dataLoader";
+import { Send, CheckCircle2 } from "lucide-react";
+import {
+  getContactData,
+  type ContactInfoEntry,
+  type ContactInfoItem,
+} from "@/lib/dataLoader";
 import * as Icons from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { sendEmail } from "@/lib/emailService";
 import { useToast } from "@/hooks/use-toast";
+
+function isPhoneGroup(info: ContactInfoEntry): info is { phones: ContactInfoItem[] } {
+  return "phones" in info;
+}
+
+function getHref(label: string, value: string) {
+  if (label.toLowerCase().includes("email")) {
+    return `mailto:${value}`;
+  }
+
+  if (label.toLowerCase().includes("phone")) {
+    return `tel:${value.replace(/\s+/g, "")}`;
+  }
+
+  return undefined;
+}
 
 export function Contact() {
   const [isSending, setIsSending] = useState(false);
@@ -87,16 +107,53 @@ export function Contact() {
 
               <div className="space-y-6">
                 {Object.entries(contactData.info).map(([key, info]) => {
-                  const IconComponent = Icons[info.icon as keyof typeof Icons] as React.ComponentType<{ className?: string }>;
+                  const iconName = isPhoneGroup(info) ? info.phones[0]?.icon : info.icon;
+                  const IconComponent = Icons[
+                    iconName as keyof typeof Icons
+                  ] as React.ComponentType<{ className?: string }>;
+
                   return (
-                    <div key={key} className="flex items-center gap-4">
+                    <div key={key} className="flex items-start gap-4">
                       <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
                         {IconComponent && <IconComponent className="w-5 h-5 text-secondary" />}
                       </div>
-                      <div>
-                        <p className="text-sm text-primary-foreground/60">{info.label}</p>
-                        <p className="font-medium">{info.value}</p>
-                      </div>
+                      {isPhoneGroup(info) ? (
+                        <div className="space-y-2">
+                          {info.phones.map((phone) => {
+                            const href = getHref(phone.label, phone.value);
+
+                            return (
+                              <div key={`${phone.label}-${phone.value}`}>
+                                <p className="text-sm text-primary-foreground/60">{phone.label}</p>
+                                {href ? (
+                                  <a
+                                    href={href}
+                                    className="font-medium transition-colors hover:text-secondary"
+                                  >
+                                    {phone.value}
+                                  </a>
+                                ) : (
+                                  <p className="font-medium">{phone.value}</p>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      ) : (
+                        <div>
+                          <p className="text-sm text-primary-foreground/60">{info.label}</p>
+                          {getHref(info.label, info.value) ? (
+                            <a
+                              href={getHref(info.label, info.value)}
+                              className="font-medium transition-colors hover:text-secondary"
+                            >
+                              {info.value}
+                            </a>
+                          ) : (
+                            <p className="font-medium">{info.value}</p>
+                          )}
+                        </div>
+                      )}
                     </div>
                   );
                 })}
