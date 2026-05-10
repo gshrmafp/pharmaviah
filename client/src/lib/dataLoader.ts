@@ -102,26 +102,22 @@ export interface ProcessData {
   };
 }
 
+export interface ContactInfoItem {
+  label: string;
+  value: string;
+  icon: string;
+}
+
+export interface ContactPhoneGroup {
+  phones: ContactInfoItem[];
+}
+
+export type ContactInfoEntry = ContactInfoItem | ContactPhoneGroup;
+
 export interface ContactData {
   title: string;
   description: string;
-  info: {
-    email: {
-      label: string;
-      value: string;
-      icon: string;
-    };
-    phone: {
-      label: string;
-      value: string;
-      icon: string;
-    };
-    address: {
-      label: string;
-      value: string;
-      icon: string;
-    };
-  };
+  info: Record<string, ContactInfoEntry>;
   hours: string;
   form: {
     successTitle: string;

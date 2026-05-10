@@ -9,9 +9,18 @@
     },
     "navbar": {
       "links": [
-        { "name": "Services", "to": "services" },
-        { "name": "Process", "to": "process" },
-        { "name": "About", "to": "about" }
+        {
+          "name": "Services",
+          "to": "services"
+        },
+        {
+          "name": "Process",
+          "to": "process"
+        },
+        {
+          "name": "About",
+          "to": "about"
+        }
       ],
       "contactButtonText": "Contact Us",
       "mobileContactButtonText": "Request Consultation"
@@ -65,6 +74,48 @@
         "description": "We provide specialized consulting services tailored to the pharmaceutical and healthcare industries."
       },
       "services": [
+        {
+          "id": "toxicology-cleaning-validation",
+          "icon": "FlaskConical",
+          "title": "Toxicology & Cleaning Validation",
+          "shortDescription": "Comprehensive toxicology assessments, ADE/PDE calculations, OEL & OEB determination, and scientific cleaning validation support for pharmaceutical manufacturing and regulatory compliance.",
+          "color": "text-purple-600",
+          "bg": "bg-purple-50",
+          "fullDescription": "Our Toxicology & Cleaning Validation services provide scientifically justified health-based exposure limits and toxicological evaluations to support pharmaceutical manufacturing, contamination control, and regulatory compliance. We specialize in ADE/PDE calculations, Occupational Exposure Limits (OEL), Occupational Exposure Banding (OEB), toxicological risk assessments, and cleaning validation support in accordance with global regulatory expectations including EMA, PIC/S, ISPE, and FDA guidelines.",
+          "features": [
+            "Acceptable Daily Exposure (ADE) calculations",
+            "Permitted Daily Exposure (PDE) calculations",
+            "Occupational Exposure Limit (OEL) determination",
+            "Occupational Exposure Band (OEB) classification",
+            "Health-Based Exposure Limit (HBEL) assessment",
+            "Toxicological Risk Assessment (TRA)",
+            "Cleaning validation toxicological evaluation",
+            "Cross-contamination risk assessment",
+            "Impurity profiling and toxicological evaluation",
+            "Genotoxic impurity assessment",
+            "Safety data interpretation and literature review",
+            "Regulatory toxicology documentation support"
+          ],
+          "benefits": [
+            "Regulatory compliance with EMA, FDA, PIC/S, and ISPE guidelines",
+            "Scientifically justified cleaning limits",
+            "Enhanced product and patient safety",
+            "Improved contamination control strategy",
+            "Risk-based manufacturing decisions",
+            "Reduced regulatory observations and compliance gaps",
+            "Expert support for audits and inspections"
+          ],
+          "useCases": [
+            "Cleaning validation program development",
+            "Shared facility and equipment risk assessment",
+            "Multi-product manufacturing facilities",
+            "Cross-contamination prevention strategies",
+            "HBEL-based cleaning limit calculations",
+            "Regulatory submission and quality documentation",
+            "API and finished product toxicological evaluation",
+            "Containment and industrial hygiene assessments"
+          ]
+        },
         {
           "id": "toxicology",
           "icon": "FlaskConical",
@@ -248,9 +299,23 @@
           "icon": "Mail"
         },
         "phone": {
-          "label": "Phone",
-          "value": "+91 9354140067",
-          "icon": "Phone"
+          "phones": [
+            {
+              "label": "Primary Phone",
+              "value": "+91 9354140067",
+              "icon": "Phone"
+            },
+            {
+              "label": "Secondary Phone",
+              "value": "+91 9992974058",
+              "icon": "Phone"
+            },
+            {
+              "label": "Phone",
+              "value": "+91 8053011120",
+              "icon": "Phone"
+            }
+          ]
         },
         "address2": {
           "label": "India Office",

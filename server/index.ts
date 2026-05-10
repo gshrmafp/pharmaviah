@@ -2,6 +2,7 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { serveStatic } from "./static";
 import { createServer } from "http";
+import net from "net";
 
 const app = express();
 const httpServer = createServer(app);
@@ -31,6 +32,37 @@ export function log(message: string, source = "express") {
   });
 
   console.log(`${formattedTime} [${source}] ${message}`);
+}
+
+async function findAvailablePort(startPort: number) {
+  let port = startPort;
+
+  while (true) {
+    const isAvailable = await new Promise<boolean>((resolve) => {
+      const tester = net.createServer();
+
+      tester.once("error", (error: NodeJS.ErrnoException) => {
+        if (error.code === "EADDRINUSE") {
+          resolve(false);
+          return;
+        }
+
+        resolve(false);
+      });
+
+      tester.once("listening", () => {
+        tester.close(() => resolve(true));
+      });
+
+      tester.listen(port, "0.0.0.0");
+    });
+
+    if (isAvailable) {
+      return port;
+    }
+
+    port += 1;
+  }
 }
 
 app.use((req, res, next) => {
@@ -85,12 +117,22 @@ app.use((req, res, next) => {
     await setupVite(httpServer, app);
   }
 
-  // ALWAYS serve the app on the port specified in the environment variable PORT
-  // Other ports are firewalled. Default to 3000 if not specified.
-  // this serves both the API and the client.
-  // It is the only port that is not firewalled.
-  const port = parseInt(process.env.PORT || "3000", 10);
+  // Respect an explicit PORT when provided. In local development, fall back
+  // to the next available port instead of crashing if 3000 is already in use.
+  const preferredPort = parseInt(process.env.PORT || "3000", 10);
+  const shouldUseFallbackPort =
+    process.env.NODE_ENV !== "production" && process.env.PORT === undefined;
+  const port = shouldUseFallbackPort
+    ? await findAvailablePort(preferredPort)
+    : preferredPort;
+
   httpServer.listen(port, "0.0.0.0", () => {
+    if (port !== preferredPort) {
+      log(
+        `port ${preferredPort} is busy, using available port ${port} instead`,
+      );
+    }
+
     log(`serving on port ${port}`);
   });
 })();

@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, CheckCircle2, ShieldCheck } from "lucide-react";
+import { ArrowRight, ShieldCheck } from "lucide-react";
 import { motion } from "framer-motion";
 import { getHeroData } from "@/lib/dataLoader";
 import { smoothScrollTo } from "@/lib/scrollUtils";
@@ -7,65 +7,91 @@ import * as Icons from "lucide-react";
 
 export function Hero() {
   const heroData = getHeroData();
-  const CheckCircleIcon = Icons[heroData.features[0].icon as keyof typeof Icons] as React.ComponentType<{ className?: string }>;
+  const gradientStartClass =
+    {
+      secondary: "from-secondary",
+      primary: "from-primary",
+      "teal-600": "from-teal-600",
+      "purple-600": "from-purple-600",
+      "blue-600": "from-blue-600",
+    }[heroData.heading.gradientStart] ?? "from-secondary";
+  const gradientEndClass =
+    {
+      secondary: "to-secondary",
+      primary: "to-primary",
+      "teal-600": "to-teal-600",
+      "purple-600": "to-purple-600",
+      "blue-600": "to-blue-600",
+    }[heroData.heading.gradientEnd] ?? "to-teal-600";
 
   return (
-    <section id="hero" className="relative min-h-[90vh] flex items-center pt-20 overflow-hidden bg-background">
-      {/* Abstract Background Element */}
-      <div className="absolute top-0 right-0 w-[50%] h-full bg-gradient-to-l from-secondary/5 to-transparent pointer-events-none" />
-      <div className="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] bg-secondary/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-[-10%] left-[-10%] w-[400px] h-[400px] bg-primary/5 rounded-full blur-3xl pointer-events-none" />
+    <section
+      id="hero"
+      className="relative flex min-h-[92vh] items-center overflow-hidden bg-[radial-gradient(circle_at_top_right,_rgba(45,212,191,0.12),_transparent_30%),linear-gradient(to_bottom,_#ffffff,_#f8fafc)] pt-24"
+    >
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute left-[-8%] top-[18%] h-56 w-56 rounded-full bg-secondary/10 blur-3xl sm:h-72 sm:w-72" />
+        <div className="absolute right-[-10%] top-0 h-72 w-72 rounded-full bg-primary/10 blur-3xl sm:h-[28rem] sm:w-[28rem]" />
+        <div className="absolute bottom-[-8%] left-1/3 h-44 w-44 rounded-full bg-teal-500/10 blur-3xl sm:h-60 sm:w-60" />
+      </div>
 
       <div className="container mx-auto px-4 md:px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-secondary/20 shadow-sm mb-6">
-              <span className="flex h-2 w-2 rounded-full bg-secondary animate-pulse"></span>
-              <span className="text-xs font-semibold text-primary tracking-wide uppercase">
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-secondary/20 bg-white/90 px-4 py-2 shadow-sm backdrop-blur">
+              <span className="flex h-2.5 w-2.5 rounded-full bg-secondary animate-pulse"></span>
+              <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-primary sm:text-xs">
                 {heroData.badge.text}
               </span>
             </div>
-            
-            <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold leading-[1.1] mb-6 text-primary">
-              {heroData.heading.line1} <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-teal-600">
+
+            <h1 className="mb-6 text-4xl font-extrabold leading-[1.05] tracking-tight text-primary sm:text-5xl lg:text-7xl">
+              <span className="block">{heroData.heading.line1}</span>
+              <span
+                className={`block bg-gradient-to-r ${gradientStartClass} ${gradientEndClass} bg-clip-text text-transparent`}
+              >
                 {heroData.heading.line2}
               </span>
             </h1>
-            
-            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-lg leading-relaxed">
+
+            <p className="mb-8 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg lg:text-xl">
               {heroData.description}
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 mb-12">
-              <Button 
-                size="lg" 
+            <div className="mb-10 flex flex-col gap-4 sm:flex-row">
+              <Button
+                size="lg"
                 onClick={() => smoothScrollTo(heroData.cta.primary.to, 80)}
-                className="w-full sm:w-auto text-base px-8 py-6 rounded-xl bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20 transition-all hover:scale-[1.02]"
+                className="h-14 w-full rounded-2xl bg-primary px-8 text-base font-semibold shadow-xl shadow-primary/20 transition-all hover:scale-[1.02] hover:bg-primary/90 sm:w-auto"
               >
                 {heroData.cta.primary.text}
               </Button>
-              <Button 
-                size="lg" 
-                variant="outline" 
+              <Button
+                size="lg"
+                variant="outline"
                 onClick={() => smoothScrollTo(heroData.cta.secondary.to, 80)}
-                className="w-full sm:w-auto text-base px-8 py-6 rounded-xl border-2 hover:bg-secondary/5 hover:text-secondary hover:border-secondary/20 transition-all group"
+                className="group h-14 w-full rounded-2xl border-2 border-slate-200 bg-white/80 px-8 text-base font-semibold text-primary backdrop-blur transition-all hover:border-secondary/30 hover:bg-secondary/5 hover:text-secondary sm:w-auto"
               >
                 {heroData.cta.secondary.text}
-                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Button>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-6 text-sm font-medium text-muted-foreground border-t border-border/50 pt-8">
+            <div className="grid gap-3 border-t border-slate-200/80 pt-8 sm:grid-cols-2">
               {heroData.features.map((feature, idx) => {
                 const IconComponent = Icons[feature.icon as keyof typeof Icons] as React.ComponentType<{ className?: string }>;
                 return (
-                  <div key={idx} className="flex items-center gap-2">
-                    {IconComponent && <IconComponent className="w-5 h-5 text-secondary" />}
+                  <div
+                    key={idx}
+                    className="flex items-center gap-3 rounded-2xl border border-white/70 bg-white/80 px-4 py-3 text-sm font-medium text-slate-700 shadow-sm backdrop-blur"
+                  >
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary/10">
+                      {IconComponent && <IconComponent className="h-5 w-5 text-secondary" />}
+                    </div>
                     <span>{feature.text}</span>
                   </div>
                 );
@@ -77,39 +103,77 @@ export function Hero() {
             initial={{ opacity: 0, scale: 0.9, y: 50 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative hidden lg:block"
+            className="relative"
           >
-            {/* Main Visual Image - Molecular structure or Lab Setting */}
-            {/* Unsplash: Laboratory/Medical clean visual */}
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white aspect-[4/3] group">
-              {/* Using descriptive comment for Unsplash */}
-              {/* pharmaceutical laboratory research clean blue modern */}
-              <img 
-                src={heroData.image.url} 
-                alt={heroData.image.alt} 
-                className="object-cover w-full h-full transform transition-transform duration-700 group-hover:scale-105"
-              />
-              
-              {/* Floating Badge */}
-              <div className="absolute bottom-8 left-8 bg-white/95 backdrop-blur-md p-4 rounded-2xl shadow-xl border border-secondary/20 max-w-xs">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="p-2 bg-secondary/10 rounded-lg text-secondary">
-                    <ShieldCheck className="w-6 h-6" />
+            <div className="relative mx-auto max-w-xl">
+              <div className="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-secondary/15 via-transparent to-primary/15 blur-2xl" />
+              <div className="relative overflow-hidden rounded-[2rem] border border-white/70 bg-white/70 p-3 shadow-2xl backdrop-blur">
+                <div className="group relative aspect-[4/4.5] overflow-hidden rounded-[1.5rem] sm:aspect-[4/3]">
+                  <img
+                    src={heroData.image.url}
+                    alt={heroData.image.alt}
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary/35 via-transparent to-transparent" />
+                </div>
+
+                <div className="absolute left-5 top-5 rounded-2xl border border-white/60 bg-white/90 px-4 py-3 shadow-lg backdrop-blur sm:left-6 sm:top-6">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">
+                    Compliance Confidence
+                  </p>
+                  <p className="mt-1 text-xl font-bold text-primary sm:text-2xl">
+                    {heroData.badgeOverlay.compliance}
+                  </p>
+                </div>
+
+                <div className="absolute bottom-5 left-5 right-5 rounded-2xl border border-white/60 bg-white/92 p-4 shadow-xl backdrop-blur sm:bottom-6 sm:left-6 sm:right-6 sm:p-5">
+                  <div className="mb-3 flex items-center gap-3">
+                    <div className="rounded-xl bg-secondary/10 p-2.5 text-secondary">
+                      <ShieldCheck className="h-5 w-5 sm:h-6 sm:w-6" />
+                    </div>
+                    <div>
+                      <p className="font-bold text-primary">{heroData.badgeOverlay.title}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {heroData.badgeOverlay.subtitle}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="font-bold text-primary">{heroData.badgeOverlay.title}</p>
-                    <p className="text-xs text-muted-foreground">{heroData.badgeOverlay.subtitle}</p>
+
+                  <div className="h-2 w-full overflow-hidden rounded-full bg-slate-100">
+                    <div
+                      className="h-full rounded-full bg-gradient-to-r from-secondary to-teal-500"
+                      style={{ width: `${heroData.badgeOverlay.progress}%` }}
+                    />
+                  </div>
+
+                  <div className="mt-3 flex items-center justify-between text-xs text-slate-500">
+                    <span>Validated process rigor</span>
+                    <span className="font-semibold text-primary">
+                      {heroData.badgeOverlay.progress}%
+                    </span>
                   </div>
                 </div>
-                <div className="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
-                  <div className="bg-secondary h-full rounded-full" style={{ width: `${heroData.badgeOverlay.progress}%` }} />
+              </div>
+
+              <div className="mt-5 grid grid-cols-2 gap-3 sm:gap-4">
+                <div className="rounded-2xl border border-white/70 bg-white/80 p-4 shadow-sm backdrop-blur">
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+                    Focus
+                  </p>
+                  <p className="mt-2 text-sm font-semibold text-primary sm:text-base">
+                    Toxicology-led compliance support
+                  </p>
                 </div>
-                <p className="text-[10px] text-right mt-1 font-mono text-muted-foreground">Compliance: {heroData.badgeOverlay.compliance}</p>
+                <div className="rounded-2xl border border-white/70 bg-white/80 p-4 shadow-sm backdrop-blur">
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+                    Delivery
+                  </p>
+                  <p className="mt-2 text-sm font-semibold text-primary sm:text-base">
+                    Audit-ready documentation and guidance
+                  </p>
+                </div>
               </div>
             </div>
-
-            {/* Decorative dots */}
-            <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-pattern-dots opacity-20" />
           </motion.div>
         </div>
       </div>
