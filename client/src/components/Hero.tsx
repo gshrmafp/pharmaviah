@@ -27,7 +27,7 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-[92vh] items-center overflow-hidden bg-[radial-gradient(circle_at_top_right,_rgba(45,212,191,0.12),_transparent_30%),linear-gradient(to_bottom,_#ffffff,_#f8fafc)] pt-24"
+      className="relative flex min-h-[92vh] items-center overflow-hidden bg-[radial-gradient(circle_at_top_right,_rgba(45,212,191,0.12),_transparent_30%),linear-gradient(to_bottom,_#ffffff,_#f8fafc)] pt-36 sm:pt-28 md:pt-24"
     >
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute left-[-8%] top-[18%] h-56 w-56 rounded-full bg-secondary/10 blur-3xl sm:h-72 sm:w-72" />
@@ -38,72 +38,24 @@ export function Hero() {
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
           <motion.div
-            variants={{
-              hidden: { opacity: 0 },
-              visible: {
-                opacity: 1,
-                transition: {
-                  staggerChildren: 0.15,
-                  delayChildren: 0.1,
-                },
-              },
-            }}
-            initial="hidden"
-            animate="visible"
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            {/* <motion.div 
-              variants={{
-                hidden: { opacity: 0, y: -20 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
-              }}
-              className="mb-6 inline-flex items-center gap-2 rounded-full border border-secondary/20 bg-white/90 px-4 py-2 shadow-sm backdrop-blur"
-            >
-              <span className="flex h-2.5 w-2.5 rounded-full bg-secondary animate-pulse"></span>
-              <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-primary sm:text-xs">
-                {heroData.badge.text}
-              </span>
-            </motion.div> */}
-
             <h1 className="mb-6 text-4xl font-extrabold leading-[1.05] tracking-tight text-primary sm:text-5xl lg:text-7xl">
-              <motion.span 
-                variants={{
-                  hidden: { opacity: 0, y: 30, rotateX: -20 },
-                  visible: { opacity: 1, y: 0, rotateX: 0, transition: { duration: 0.8, ease: "easeOut" } }
-                }}
-                style={{ transformPerspective: 1000 }}
-                className="block origin-bottom"
-              >
-                {heroData.heading.line1}
-              </motion.span>
-              <motion.span
-                variants={{
-                  hidden: { opacity: 0, y: 30, rotateX: -20 },
-                  visible: { opacity: 1, y: 0, rotateX: 0, transition: { duration: 0.8, ease: "easeOut" } }
-                }}
-                style={{ transformPerspective: 1000 }}
-                className={`block origin-bottom bg-gradient-to-r ${gradientStartClass} ${gradientEndClass} bg-clip-text text-transparent`}
+              <span className="block">{heroData.heading.line1}</span>
+              <span
+                className={`block bg-gradient-to-r ${gradientStartClass} ${gradientEndClass} bg-clip-text text-transparent`}
               >
                 {heroData.heading.line2}
-              </motion.span>
+              </span>
             </h1>
 
-            <motion.p 
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
-              }}
-              className="mb-8 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg lg:text-xl"
-            >
+            <p className="mb-8 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg lg:text-xl">
               {heroData.description}
-            </motion.p>
+            </p>
 
-            <motion.div 
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
-              }}
-              className="mb-10 flex flex-col gap-4 sm:flex-row"
-            >
+            <div className="mb-10 flex flex-col gap-4 sm:flex-row">
               <Button
                 size="lg"
                 onClick={() => smoothScrollTo(heroData.cta.primary.to, 80)}
@@ -120,31 +72,24 @@ export function Hero() {
                 {heroData.cta.secondary.text}
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Button>
-            </motion.div>
+            </div>
 
-            <motion.div 
-              variants={{
-                hidden: { opacity: 0, y: 20 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
-              }}
-              className="grid gap-3 border-t border-slate-200/80 pt-8 sm:grid-cols-2"
-            >
+            <div className="grid gap-3 border-t border-slate-200/80 pt-8 sm:grid-cols-2">
               {heroData.features.map((feature, idx) => {
                 const IconComponent = Icons[feature.icon as keyof typeof Icons] as React.ComponentType<{ className?: string }>;
                 return (
-                  <motion.div
+                  <div
                     key={idx}
-                    whileHover={{ scale: 1.02, y: -2 }}
-                    className="flex items-center gap-3 rounded-2xl border border-white/70 bg-white/80 px-4 py-3 text-sm font-medium text-slate-700 shadow-sm backdrop-blur transition-all"
+                    className="flex items-center gap-3 rounded-2xl border border-white/70 bg-white/80 px-4 py-3 text-sm font-medium text-slate-700 shadow-sm backdrop-blur"
                   >
                     <div className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary/10">
                       {IconComponent && <IconComponent className="h-5 w-5 text-secondary" />}
                     </div>
                     <span>{feature.text}</span>
-                  </motion.div>
+                  </div>
                 );
               })}
-            </motion.div>
+            </div>
           </motion.div>
 
           <motion.div
@@ -165,26 +110,16 @@ export function Hero() {
                   <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-primary/20 to-transparent mix-blend-multiply" />
                 </div>
 
-                <motion.div 
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.6 }}
-                  className="absolute left-0 top-8 rounded-r-2xl border-y border-r border-white/40 bg-white/80 px-5 py-3 shadow-[0_8px_30px_rgb(0,0,0,0.12)] backdrop-blur-md sm:top-10"
-                >
+                <div className="absolute left-0 top-8 rounded-r-2xl border-y border-r border-white/40 bg-white/80 px-5 py-3 shadow-[0_8px_30px_rgb(0,0,0,0.12)] backdrop-blur-md sm:top-10">
                   <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-secondary">
                     Compliance Confidence
                   </p>
                   <p className="mt-0.5 text-lg font-black text-slate-800 sm:text-xl">
                     {heroData.badgeOverlay.compliance}
                   </p>
-                </motion.div>
+                </div>
 
-                <motion.div 
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.8 }}
-                  className="absolute bottom-6 right-6 left-6 sm:left-auto sm:w-[320px] rounded-2xl border border-white/50 bg-white/85 p-5 shadow-[0_20px_40px_rgb(0,0,0,0.15)] backdrop-blur-xl"
-                >
+                <div className="absolute bottom-6 right-6 left-6 sm:left-auto sm:w-[320px] rounded-2xl border border-white/50 bg-white/85 p-5 shadow-[0_20px_40px_rgb(0,0,0,0.15)] backdrop-blur-xl">
                   <div className="mb-4 flex items-center gap-4">
                     <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-secondary to-teal-400 text-white shadow-inner">
                       <ShieldCheck className="h-6 w-6" />
@@ -205,15 +140,13 @@ export function Hero() {
                       </span>
                     </div>
                     <div className="h-2 w-full overflow-hidden rounded-full bg-slate-200/80 shadow-inner">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: `${heroData.badgeOverlay.progress}%` }}
-                        transition={{ duration: 1.5, delay: 1, ease: "easeOut" }}
+                      <div
                         className="h-full rounded-full bg-gradient-to-r from-secondary to-teal-400"
+                        style={{ width: `${heroData.badgeOverlay.progress}%` }}
                       />
                     </div>
                   </div>
-                </motion.div>
+                </div>
               </div>
 
               <div className="mt-5 grid grid-cols-2 gap-3 sm:gap-4">
