@@ -48,21 +48,27 @@ export function Navbar() {
         <div className="container mx-auto px-4 md:px-6">
           <div
             className={cn(
-              "flex items-center justify-between rounded-2xl border px-4 py-3 shadow-lg shadow-slate-900/5 transition-all duration-300 md:px-5",
+              "mx-auto flex w-full items-center justify-between transition-all duration-500",
               isScrolled
-                ? "border-white/60 bg-white/85 backdrop-blur-xl"
-                : "border-white/50 bg-white/70 backdrop-blur-lg"
+                ? "max-w-5xl rounded-full border border-white/60 bg-white/85 px-4 py-3 shadow-[0_8px_30px_rgb(0,0,0,0.12)] backdrop-blur-xl md:px-6"
+                : "max-w-7xl rounded-none border border-transparent bg-transparent px-2 py-4 shadow-none backdrop-blur-none"
             )}
           >
           <button
             onClick={() => handleNavClick("hero")}
             className="group flex items-center gap-3 cursor-pointer"
           >
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white shadow-md transition-transform duration-300 group-hover:scale-105 p-1">
+            <div className={cn(
+              "flex items-center justify-center rounded-2xl bg-white shadow-sm transition-transform duration-300 group-hover:scale-105 p-1 border border-slate-100",
+              isScrolled ? "h-11 w-11" : "h-12 w-12"
+            )}>
               <img src={logoImage} alt="Pharmviah Logo" className="h-full w-full object-contain" />
             </div>
             <div className="text-left">
-              <p className="text-lg font-bold tracking-tight text-primary sm:text-xl">
+              <p className={cn(
+                "font-bold tracking-tight text-primary transition-all duration-300",
+                isScrolled ? "text-lg" : "text-xl"
+              )}>
                 {companyData.displayName}
               </p>
               <p className="hidden text-[11px] font-medium uppercase tracking-[0.24em] text-slate-500 sm:block">
@@ -72,13 +78,16 @@ export function Navbar() {
           </button>
 
           {/* Desktop Nav */}
-          <div className="hidden items-center gap-3 md:flex">
-            <div className="flex items-center gap-1 rounded-full border border-slate-200/70 bg-white/80 p-1.5 shadow-inner">
+          <div className="hidden items-center gap-6 md:flex">
+            <div className="flex items-center gap-1">
               {navbarData.links.map((link) => (
                 <button
                   key={link.name}
                   onClick={() => handleNavClick(link.to)}
-                  className="rounded-full px-4 py-2 text-sm font-semibold text-slate-600 transition-all hover:bg-slate-50 hover:text-primary"
+                  className={cn(
+                    "relative px-4 py-2 text-sm font-semibold transition-all after:absolute after:bottom-1 after:left-1/2 after:h-[2px] after:w-0 after:-translate-x-1/2 after:rounded-full after:bg-secondary after:transition-all hover:text-primary hover:after:w-1/2",
+                    isScrolled ? "text-slate-600" : "text-slate-700"
+                  )}
                 >
                   {link.name}
                 </button>
@@ -86,7 +95,7 @@ export function Navbar() {
             </div>
             <Button
               onClick={() => handleNavClick("contact")}
-              className="h-11 rounded-full bg-secondary px-5 font-semibold text-white shadow-lg shadow-secondary/20 transition-all hover:-translate-y-0.5 hover:bg-secondary/90"
+              className="h-11 rounded-full bg-secondary px-6 font-semibold text-white shadow-[0_8px_20px_rgb(20,184,166,0.3)] transition-all hover:-translate-y-0.5 hover:bg-secondary/90 hover:shadow-[0_10px_25px_rgb(20,184,166,0.4)]"
             >
               {navbarData.contactButtonText}
               <ArrowUpRight className="ml-2 h-4 w-4" />
@@ -95,7 +104,7 @@ export function Navbar() {
 
           {/* Mobile Menu Button */}
           <button
-            className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200/70 bg-white/80 text-primary shadow-sm md:hidden"
+            className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200/70 bg-white/80 text-primary shadow-sm transition-transform hover:scale-105 active:scale-95 md:hidden"
             onClick={() => setMobileMenuOpen(true)}
             aria-label="Open navigation menu"
           >
