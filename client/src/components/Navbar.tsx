@@ -7,6 +7,7 @@ import { getNavbarData, getCompanyData } from "@/lib/dataLoader";
 import { smoothScrollTo } from "@/lib/scrollUtils";
 import { debounce } from "@/lib/scrollUtils";
 import * as Icons from "lucide-react";
+import logoImage from "@/data/pharmviahlogo.png";
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -57,8 +58,8 @@ export function Navbar() {
             onClick={() => handleNavClick("hero")}
             className="group flex items-center gap-3 cursor-pointer"
           >
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-secondary text-white shadow-md transition-transform duration-300 group-hover:scale-105">
-              {BrandIcon && <BrandIcon className="h-5 w-5" />}
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white shadow-md transition-transform duration-300 group-hover:scale-105 p-1">
+              <img src={logoImage} alt="Pharmviah Logo" className="h-full w-full object-contain" />
             </div>
             <div className="text-left">
               <p className="text-lg font-bold tracking-tight text-primary sm:text-xl">
@@ -124,8 +125,8 @@ export function Navbar() {
             >
               <div className="flex items-center justify-between border-b border-slate-100 px-5 py-5">
                 <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-secondary text-white">
-                    {BrandIcon && <BrandIcon className="h-5 w-5" />}
+                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white p-1 shadow-sm border border-slate-100">
+                    <img src={logoImage} alt="Pharmviah Logo" className="h-full w-full object-contain" />
                   </div>
                   <div>
                     <p className="text-base font-bold text-primary">

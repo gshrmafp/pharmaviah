@@ -1,6 +1,7 @@
 import { Stethoscope } from "lucide-react";
 import { getFooterData, getCompanyData } from "@/lib/dataLoader";
 import { smoothScrollTo } from "@/lib/scrollUtils";
+import logoImage from "@/data/pharmviahlogo.png";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -12,8 +13,10 @@ export function Footer() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid md:grid-cols-4 gap-12 mb-12">
           <div className="col-span-1 md:col-span-2">
-            <div className="flex items-center gap-2 mb-6">
-              <Stethoscope className="w-6 h-6 text-secondary" />
+            <div className="flex items-center gap-3 mb-6">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white p-1 shadow-sm">
+                <img src={logoImage} alt="Pharmviah Logo" className="h-full w-full object-contain" />
+              </div>
               <span className="font-display font-bold text-2xl">
                 {companyData.displayName}
               </span>

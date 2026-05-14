@@ -51,14 +51,14 @@ export function Contact() {
     defaultValues: {
       name: "",
       email: "",
-      organization: "",
+      phone: "",
+      subject: "",
       message: "",
     },
   });
 
   const onSubmit = async (data: InsertContact) => {
-    // Honeypot check (assuming a field named 'subject' as honeypot if added, 
-    // but here we just follow the standard pattern)
+    // Honeypot check can be added here if the form starts receiving spam.
     setIsSending(true);
     try {
       await sendEmail(data);
@@ -68,14 +68,14 @@ export function Contact() {
         description: "We have received your request and will get back to you soon.",
       });
     } catch (error) {
-      console.error("EmailJS send failed:", error);
-      const emailjsError = error as { status?: number; text?: string; message?: string };
+      console.error("Contact form submission failed:", error);
+      const requestError = error as { status?: number; text?: string; message?: string };
       const detail =
-        emailjsError?.text ||
-        emailjsError?.message ||
+        requestError?.text ||
+        requestError?.message ||
         (typeof error === "string" ? error : "Unknown error");
       toast({
-        title: `Error${emailjsError?.status ? ` (${emailjsError.status})` : ""}`,
+        title: `Error${requestError?.status ? ` (${requestError.status})` : ""}`,
         description: `Failed to send: ${detail}`,
         variant: "destructive",
       });
@@ -231,7 +231,7 @@ export function Contact() {
                             <FormItem>
                               <FormLabel className="text-primary font-semibold">Email</FormLabel>
                               <FormControl>
-                                <Input placeholder="contact@pharmviah.com" className="h-12 bg-slate-50 border-slate-200 focus:border-secondary focus:ring-secondary/10" {...field} />
+                                <Input type="email" placeholder="contact@pharmviah.com" className="h-12 bg-slate-50 border-slate-200 focus:border-secondary focus:ring-secondary/10" {...field} />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
@@ -239,18 +239,32 @@ export function Contact() {
                         />
                         <FormField
                           control={form.control}
-                          name="organization"
+                          name="phone"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel className="text-primary font-semibold">Organization</FormLabel>
+                              <FormLabel className="text-primary font-semibold">Phone Number</FormLabel>
                               <FormControl>
-                                <Input placeholder="Pharmviah" className="h-12 bg-slate-50 border-slate-200 focus:border-secondary focus:ring-secondary/10" {...field} />
+                                <Input type="tel" placeholder="+919632063309" className="h-12 bg-slate-50 border-slate-200 focus:border-secondary focus:ring-secondary/10" {...field} />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
                           )}
                         />
                       </div>
+
+                      <FormField
+                        control={form.control}
+                        name="subject"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-primary font-semibold">Subject</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Inquiry about services" className="h-12 bg-slate-50 border-slate-200 focus:border-secondary focus:ring-secondary/10" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
 
                       <FormField
                         control={form.control}

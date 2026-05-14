@@ -1,4 +1,4 @@
-import { type ContactMessage, type InsertContact } from "@shared/schema";
+import { type ContactMessage, type InsertContact } from "../shared/schema";
 
 export interface IStorage {
   createContact(contact: InsertContact): Promise<ContactMessage>;

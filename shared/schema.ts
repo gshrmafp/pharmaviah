@@ -9,7 +9,8 @@ export const contactMessages = pgTable("contact_messages", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
   email: text("email").notNull(),
-  organization: text("organization").notNull(),
+  phone: text("phone").notNull(),
+  subject: text("subject").notNull(),
   message: text("message").notNull(),
 });
 
