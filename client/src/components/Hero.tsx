@@ -38,31 +38,72 @@ export function Hero() {
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: {
+                  staggerChildren: 0.15,
+                  delayChildren: 0.1,
+                },
+              },
+            }}
+            initial="hidden"
+            animate="visible"
           >
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-secondary/20 bg-white/90 px-4 py-2 shadow-sm backdrop-blur">
+            {/* <motion.div 
+              variants={{
+                hidden: { opacity: 0, y: -20 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+              }}
+              className="mb-6 inline-flex items-center gap-2 rounded-full border border-secondary/20 bg-white/90 px-4 py-2 shadow-sm backdrop-blur"
+            >
               <span className="flex h-2.5 w-2.5 rounded-full bg-secondary animate-pulse"></span>
               <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-primary sm:text-xs">
                 {heroData.badge.text}
               </span>
-            </div>
+            </motion.div> */}
 
             <h1 className="mb-6 text-4xl font-extrabold leading-[1.05] tracking-tight text-primary sm:text-5xl lg:text-7xl">
-              <span className="block">{heroData.heading.line1}</span>
-              <span
-                className={`block bg-gradient-to-r ${gradientStartClass} ${gradientEndClass} bg-clip-text text-transparent`}
+              <motion.span 
+                variants={{
+                  hidden: { opacity: 0, y: 30, rotateX: -20 },
+                  visible: { opacity: 1, y: 0, rotateX: 0, transition: { duration: 0.8, ease: "easeOut" } }
+                }}
+                style={{ transformPerspective: 1000 }}
+                className="block origin-bottom"
+              >
+                {heroData.heading.line1}
+              </motion.span>
+              <motion.span
+                variants={{
+                  hidden: { opacity: 0, y: 30, rotateX: -20 },
+                  visible: { opacity: 1, y: 0, rotateX: 0, transition: { duration: 0.8, ease: "easeOut" } }
+                }}
+                style={{ transformPerspective: 1000 }}
+                className={`block origin-bottom bg-gradient-to-r ${gradientStartClass} ${gradientEndClass} bg-clip-text text-transparent`}
               >
                 {heroData.heading.line2}
-              </span>
+              </motion.span>
             </h1>
 
-            <p className="mb-8 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg lg:text-xl">
+            <motion.p 
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+              }}
+              className="mb-8 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg lg:text-xl"
+            >
               {heroData.description}
-            </p>
+            </motion.p>
 
-            <div className="mb-10 flex flex-col gap-4 sm:flex-row">
+            <motion.div 
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+              }}
+              className="mb-10 flex flex-col gap-4 sm:flex-row"
+            >
               <Button
                 size="lg"
                 onClick={() => smoothScrollTo(heroData.cta.primary.to, 80)}
@@ -79,24 +120,31 @@ export function Hero() {
                 {heroData.cta.secondary.text}
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Button>
-            </div>
+            </motion.div>
 
-            <div className="grid gap-3 border-t border-slate-200/80 pt-8 sm:grid-cols-2">
+            <motion.div 
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+              }}
+              className="grid gap-3 border-t border-slate-200/80 pt-8 sm:grid-cols-2"
+            >
               {heroData.features.map((feature, idx) => {
                 const IconComponent = Icons[feature.icon as keyof typeof Icons] as React.ComponentType<{ className?: string }>;
                 return (
-                  <div
+                  <motion.div
                     key={idx}
-                    className="flex items-center gap-3 rounded-2xl border border-white/70 bg-white/80 px-4 py-3 text-sm font-medium text-slate-700 shadow-sm backdrop-blur"
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    className="flex items-center gap-3 rounded-2xl border border-white/70 bg-white/80 px-4 py-3 text-sm font-medium text-slate-700 shadow-sm backdrop-blur transition-all"
                   >
                     <div className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary/10">
                       {IconComponent && <IconComponent className="h-5 w-5 text-secondary" />}
                     </div>
                     <span>{feature.text}</span>
-                  </div>
+                  </motion.div>
                 );
               })}
-            </div>
+            </motion.div>
           </motion.div>
 
           <motion.div
@@ -114,45 +162,58 @@ export function Hero() {
                     alt={heroData.image.alt}
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/35 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-primary/20 to-transparent mix-blend-multiply" />
                 </div>
 
-                <div className="absolute left-5 top-5 rounded-2xl border border-white/60 bg-white/90 px-4 py-3 shadow-lg backdrop-blur sm:left-6 sm:top-6">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">
+                <motion.div 
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.6 }}
+                  className="absolute left-0 top-8 rounded-r-2xl border-y border-r border-white/40 bg-white/80 px-5 py-3 shadow-[0_8px_30px_rgb(0,0,0,0.12)] backdrop-blur-md sm:top-10"
+                >
+                  <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-secondary">
                     Compliance Confidence
                   </p>
-                  <p className="mt-1 text-xl font-bold text-primary sm:text-2xl">
+                  <p className="mt-0.5 text-lg font-black text-slate-800 sm:text-xl">
                     {heroData.badgeOverlay.compliance}
                   </p>
-                </div>
+                </motion.div>
 
-                <div className="absolute bottom-5 left-5 right-5 rounded-2xl border border-white/60 bg-white/92 p-4 shadow-xl backdrop-blur sm:bottom-6 sm:left-6 sm:right-6 sm:p-5">
-                  <div className="mb-3 flex items-center gap-3">
-                    <div className="rounded-xl bg-secondary/10 p-2.5 text-secondary">
-                      <ShieldCheck className="h-5 w-5 sm:h-6 sm:w-6" />
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.8 }}
+                  className="absolute bottom-6 right-6 left-6 sm:left-auto sm:w-[320px] rounded-2xl border border-white/50 bg-white/85 p-5 shadow-[0_20px_40px_rgb(0,0,0,0.15)] backdrop-blur-xl"
+                >
+                  <div className="mb-4 flex items-center gap-4">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-secondary to-teal-400 text-white shadow-inner">
+                      <ShieldCheck className="h-6 w-6" />
                     </div>
                     <div>
-                      <p className="font-bold text-primary">{heroData.badgeOverlay.title}</p>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-sm font-bold text-slate-800">{heroData.badgeOverlay.title}</p>
+                      <p className="text-xs font-medium text-slate-500">
                         {heroData.badgeOverlay.subtitle}
                       </p>
                     </div>
                   </div>
 
-                  <div className="h-2 w-full overflow-hidden rounded-full bg-slate-100">
-                    <div
-                      className="h-full rounded-full bg-gradient-to-r from-secondary to-teal-500"
-                      style={{ width: `${heroData.badgeOverlay.progress}%` }}
-                    />
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between text-xs font-bold">
+                      <span className="text-slate-600">Validated process rigor</span>
+                      <span className="text-secondary">
+                        {heroData.badgeOverlay.progress}%
+                      </span>
+                    </div>
+                    <div className="h-2 w-full overflow-hidden rounded-full bg-slate-200/80 shadow-inner">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: `${heroData.badgeOverlay.progress}%` }}
+                        transition={{ duration: 1.5, delay: 1, ease: "easeOut" }}
+                        className="h-full rounded-full bg-gradient-to-r from-secondary to-teal-400"
+                      />
+                    </div>
                   </div>
-
-                  <div className="mt-3 flex items-center justify-between text-xs text-slate-500">
-                    <span>Validated process rigor</span>
-                    <span className="font-semibold text-primary">
-                      {heroData.badgeOverlay.progress}%
-                    </span>
-                  </div>
-                </div>
+                </motion.div>
               </div>
 
               <div className="mt-5 grid grid-cols-2 gap-3 sm:gap-4">

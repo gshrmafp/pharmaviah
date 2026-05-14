@@ -1,23 +1,26 @@
-import emailjs from '@emailjs/browser';
+import type { InsertContact } from "@shared/schema";
 
-/**
- * Sends an email using EmailJS.
- * Requires VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID, and VITE_EMAILJS_PUBLIC_KEY
- */
-export async function sendEmail(data: Record<string, unknown>) {
-  const serviceId = "service_m8juwtc";
-  const templateId = "template_ihthi52";
-  const publicKey = "OQPytgeTOJk8IQeNR";
+type ContactApiResponse = {
+  success: boolean;
+  message: string;
+};
 
-  console.log(serviceId, templateId, publicKey);
-  if (!serviceId || !templateId || !publicKey) {
-    throw new Error('EmailJS configuration is missing. Please check your environment variables.');
+export async function sendEmail(data: InsertContact) {
+  const response = await fetch("https://api.pharmviah.com/api/contact", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  const payload = (await response
+    .json()
+    .catch(() => null)) as ContactApiResponse | { message?: string } | null;
+
+  if (!response.ok) {
+    throw new Error(payload?.message || "Failed to send your message.");
   }
 
-  return emailjs.send(
-    serviceId,
-    templateId,
-    data,
-    publicKey
-  );
+  return payload;
 }
